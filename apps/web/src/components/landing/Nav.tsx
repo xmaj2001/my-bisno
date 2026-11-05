@@ -37,7 +37,7 @@ export function Nav() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled || open
+        scrolled
           ? "bg-white/95 backdrop-blur-md border-b border-black/8 py-4 shadow-sm"
           : "bg-transparent py-6",
       )}
@@ -59,7 +59,7 @@ export function Nav() {
           <span
             className={cn(
               "font-display text-lg font-bold tracking-[0.12em] transition-colors duration-500",
-              scrolled || open ? "text-foreground" : "text-white",
+              scrolled ? "text-foreground" : "text-white",
             )}
           >
             Bisno
@@ -74,7 +74,7 @@ export function Nav() {
               href={l.href}
               className={cn(
                 "text-sm font-medium transition-colors duration-300",
-                scrolled || open
+                scrolled
                   ? "text-foreground/70 hover:text-foreground"
                   : "text-white/70 hover:text-white",
               )}
@@ -106,7 +106,7 @@ export function Nav() {
         <button
           className={cn(
             "flex size-10 items-center justify-center rounded-full border backdrop-blur-md lg:hidden transition-colors",
-            scrolled || open
+            scrolled
               ? "border-black/10 bg-black/5 text-foreground hover:bg-black/10"
               : "border-white/20 bg-white/5 text-white hover:bg-white/10",
           )}
