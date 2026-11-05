@@ -25,7 +25,7 @@ export default async function NotFound({ params }: NotFoundProps) {
   const dict = lang === "en" ? enDict.notFound : ptDict.notFound;
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden px-4">
+    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden px-4 bg-black">
       {/* 1. Imagem de fundo */}
       <Image
         src="/error/404.jpeg"
