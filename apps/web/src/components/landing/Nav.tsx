@@ -38,7 +38,7 @@ export function Nav() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
         scrolled || open
-          ? "bg-night/95 backdrop-blur-md border-b border-white/8 py-4"
+          ? "bg-white/95 backdrop-blur-md border-b border-black/8 py-4 shadow-sm"
           : "bg-transparent py-6",
       )}
     >
@@ -56,7 +56,12 @@ export function Nav() {
           className="inline-flex items-center gap-2.5 transition-opacity hover:opacity-80"
         >
           <LogoMark className="h-7 w-auto" />
-          <span className="font-display text-lg font-bold tracking-[0.12em] text-white">
+          <span
+            className={cn(
+              "font-display text-lg font-bold tracking-[0.12em] transition-colors duration-500",
+              scrolled || open ? "text-foreground" : "text-white",
+            )}
+          >
             Bisno
           </span>
         </a>
@@ -67,20 +72,29 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-white/70 transition-colors duration-200 hover:text-white"
+              className={cn(
+                "text-sm font-medium transition-colors duration-300",
+                scrolled || open
+                  ? "text-foreground/70 hover:text-foreground"
+                  : "text-white/70 hover:text-white",
+              )}
             >
               {l.label}
             </a>
           ))}
         </nav>
 
-        {/* CTA desktop — pill */}
+        {/* CTA desktop */}
         <div className="hidden lg:block">
           <Button
             asChild
-            variant="hero"
+            variant={scrolled ? "hero" : "outline"}
             size="default"
-            className="rounded-full px-6"
+            className={cn(
+              "rounded-full px-6 transition-all duration-300",
+              !scrolled &&
+                "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white",
+            )}
           >
             <a href={SIGNUP_URL}>
               Entrar <span aria-hidden>→</span>
@@ -90,7 +104,12 @@ export function Nav() {
 
         {/* Hambúrguer mobile */}
         <button
-          className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-md lg:hidden transition-colors hover:bg-white/10"
+          className={cn(
+            "flex size-10 items-center justify-center rounded-full border backdrop-blur-md lg:hidden transition-colors",
+            scrolled || open
+              ? "border-black/10 bg-black/5 text-foreground hover:bg-black/10"
+              : "border-white/20 bg-white/5 text-white hover:bg-white/10",
+          )}
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           type="button"
@@ -107,13 +126,13 @@ export function Nav() {
         )}
       >
         <div className="overflow-hidden">
-          <nav className="flex flex-col border-t border-white/10 px-6 pb-6 pt-4">
+          <nav className="flex flex-col border-t border-black/10 bg-white px-6 pb-6 pt-4">
             {links.map((l, i) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-white/8 py-4 text-base font-medium text-white/80 transition-colors hover:text-white"
+                className="flex items-center justify-between border-b border-black/8 py-4 text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
               >
                 <span>{l.label}</span>
                 <span className="font-mono text-xs text-primary/80">
