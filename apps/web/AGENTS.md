@@ -282,11 +282,16 @@ Todos vivem em `src/providers/` e são juntos em **`app-providers.tsx`**, que é
 // providers/app-providers.tsx
 "use client";
 
-export function AppProviders({ children }: { children: React.ReactNode }) {
+import { Toaster } from "@/components/ui/sonner";
+
+export function AppProviders({ children, networkDictionary }: AppProvidersProps) {
   return (
     <ThemeProvider>
       <QueryProvider>
-        <NetworkProvider>{children}</NetworkProvider>
+        <NetworkProvider dictionary={networkDictionary}>
+          {children}
+          <Toaster richColors closeButton position="bottom-right" />
+        </NetworkProvider>
       </QueryProvider>
     </ThemeProvider>
   );

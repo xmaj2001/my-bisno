@@ -1,6 +1,7 @@
 "use client";
 
 import type * as React from "react";
+import { Toaster } from "@/components/ui/sonner";
 import { NetworkProvider } from "./network-provider";
 import { QueryProvider } from "./query-provider";
 import { ThemeProvider } from "./theme-provider";
@@ -22,6 +23,7 @@ export function AppProviders({
       <QueryProvider>
         <NetworkProvider dictionary={networkDictionary}>
           {children}
+          <Toaster richColors closeButton position="bottom-right" />
         </NetworkProvider>
       </QueryProvider>
     </ThemeProvider>

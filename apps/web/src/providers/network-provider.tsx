@@ -3,6 +3,7 @@
 import { onlineManager } from "@tanstack/react-query";
 import { Wifi, WifiOff } from "lucide-react";
 import * as React from "react";
+import { toast } from "sonner";
 
 interface NetworkContextValue {
   isOnline: boolean;
@@ -24,35 +25,51 @@ interface NetworkProviderProps {
   };
 }
 
+const DEFAULT_DICTIONARY = {
+  offline: "Sem ligação à internet. Algumas ações foram desativadas.",
+  backOnline: "Ligação restabelecida!",
+};
+
 export function NetworkProvider({
   children,
-  dictionary = {
-    offline: "Sem ligação à internet. Algumas ações foram desativadas.",
-    backOnline: "Ligação restabelecida!",
-  },
+  dictionary = DEFAULT_DICTIONARY,
 }: NetworkProviderProps) {
   const [isOnline, setIsOnline] = React.useState(true);
-  const [showStatusBanner, setShowStatusBanner] = React.useState(false);
-  const [hasChanged, setHasChanged] = React.useState(false);
 
   React.useEffect(() => {
-    setIsOnline(navigator.onLine);
-    onlineManager.setOnline(navigator.onLine);
+    const initialStatus =
+      typeof navigator !== "undefined" ? navigator.onLine : true;
+    setIsOnline(initialStatus);
+    onlineManager.setOnline(initialStatus);
+
+    if (!initialStatus) {
+      toast.error(dictionary.offline, {
+        id: "network-status",
+        duration: Infinity,
+        icon: <WifiOff className="size-4" />,
+      });
+    }
 
     const handleOnline = () => {
       setIsOnline(true);
       onlineManager.setOnline(true);
-      setHasChanged(true);
-      setShowStatusBanner(true);
-      const timer = setTimeout(() => setShowStatusBanner(false), 4000);
-      return () => clearTimeout(timer);
+      toast.dismiss("network-status");
+      toast.success(dictionary.backOnline, {
+        id: "network-status",
+        duration: 4000,
+        icon: <Wifi className="size-4" />,
+      });
     };
 
     const handleOffline = () => {
       setIsOnline(false);
       onlineManager.setOnline(false);
-      setHasChanged(true);
-      setShowStatusBanner(true);
+      toast.dismiss("network-status");
+      toast.error(dictionary.offline, {
+        id: "network-status",
+        duration: Infinity,
+        icon: <WifiOff className="size-4" />,
+      });
     };
 
     window.addEventListener("online", handleOnline);
@@ -62,33 +79,11 @@ export function NetworkProvider({
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
-  }, []);
+  }, [dictionary.backOnline, dictionary.offline]);
 
   return (
     <NetworkContext.Provider value={{ isOnline }}>
       {children}
-      {hasChanged && showStatusBanner && (
-        <output
-          aria-live="polite"
-          className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium shadow-lg transition-all duration-300 ${
-            isOnline
-              ? "bg-emerald-600 text-white dark:bg-emerald-500"
-              : "bg-destructive text-destructive-foreground"
-          }`}
-        >
-          {isOnline ? (
-            <>
-              <Wifi className="h-4 w-4" />
-              <span>{dictionary.backOnline}</span>
-            </>
-          ) : (
-            <>
-              <WifiOff className="h-4 w-4" />
-              <span>{dictionary.offline}</span>
-            </>
-          )}
-        </output>
-      )}
     </NetworkContext.Provider>
   );
 }
