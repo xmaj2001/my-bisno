@@ -11,7 +11,8 @@ import { useScrollFrame } from "./Parallax";
 const links = [
   { href: "#como-funciona", label: "Como Funciona" },
   { href: "#envio-e-compra", label: "Vantagens" },
-  { href: "#comissoes", label: "Estatísticas" },
+  { href: "#comissoes", label: "Comissões" },
+  { href: "#estatisticas", label: "Estatísticas" },
   { href: "#perguntas", label: "FAQ" },
 ];
 
@@ -51,7 +52,12 @@ export function Nav() {
         className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-primary"
       />
 
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12">
+      <div
+        className={cn(
+          "mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12",
+          isLight && open? "sm:mb-4" : "",
+        )}
+      >
         {/* Logo */}
         <a
           href="#topo"
@@ -62,7 +68,7 @@ export function Nav() {
           <span
             className={cn(
               "font-display text-lg font-bold tracking-[0.12em] transition-colors duration-500",
-              isLight ? "text-foreground" : "text-white",
+              isLight ? "text-black" : "text-white",
             )}
           >
             Bisno
@@ -78,7 +84,7 @@ export function Nav() {
               className={cn(
                 "text-sm font-medium transition-colors duration-300",
                 scrolled
-                  ? "text-foreground/70 hover:text-foreground"
+                  ? "text-black/70 hover:text-primary"
                   : "text-white/70 hover:text-white",
               )}
             >
@@ -110,8 +116,8 @@ export function Nav() {
           className={cn(
             "flex size-10 items-center justify-center rounded-full border backdrop-blur-md lg:hidden transition-colors",
             isLight
-              ? "border-black/10 bg-black/5 text-foreground hover:bg-black/10"
-              : "border-white/20 bg-white/5 text-white hover:bg-white/10",
+              ? "border-black/10 bg-black/5 text-black hover:bg-black/10"
+              : "border-white/20 bg-white/5 text-foreground hover:bg-white/10",
           )}
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -135,7 +141,7 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between border-b border-black/8 py-4 text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
+                className="flex items-center justify-between border-b border-black/8 py-4 text-base font-medium text-black/80 transition-colors hover:text-primary"
               >
                 <span>{l.label}</span>
                 <span className="font-mono text-xs text-primary/80">

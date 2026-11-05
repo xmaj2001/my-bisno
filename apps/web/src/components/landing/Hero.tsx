@@ -37,8 +37,8 @@ export function Hero() {
       </div>
 
       {/* Overlay escuro gradiente — replica o estilo da referência */}
-      <div className="absolute inset-0 bg-gradient-to-r from-night/95 via-night/70 to-night/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-night/80 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-night/65 via-night/30 to-night/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-night/8 via-transparent to-transparent" />
 
       {/* Conteúdo */}
       <div
