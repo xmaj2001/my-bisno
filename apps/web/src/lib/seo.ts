@@ -29,8 +29,8 @@ export function constructMetadata({
       `${baseUrl}/${locale}${normalizedPath === "/" ? "" : normalizedPath}`;
   }
 
-  const defaultTitle = "Web Application";
-  const finalTitle = title ? `${title} | Web App` : defaultTitle;
+  const defaultTitle = "Bisno";
+  const finalTitle = title ? `${title} | Bisno` : defaultTitle;
 
   return {
     title: finalTitle,
@@ -43,7 +43,7 @@ export function constructMetadata({
       title: finalTitle,
       description,
       url: canonicalUrl,
-      siteName: "Web App",
+      siteName: "Bisno",
       locale: lang === "pt" ? "pt_PT" : "en_US",
       type: "website",
       ...(image ? { images: [{ url: image }] } : {}),

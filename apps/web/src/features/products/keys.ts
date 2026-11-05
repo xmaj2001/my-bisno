@@ -1,8 +1,8 @@
-import type { ProductFilters } from "./types";
+import type { GetProductsParams } from "./types";
 
 export const productKeys = {
   all: ["products"] as const,
-  list: (filters?: ProductFilters) =>
-    [...productKeys.all, "list", filters] as const,
-  detail: (id: string) => [...productKeys.all, "detail", id] as const,
+  list: (params?: GetProductsParams) =>
+    [...productKeys.all, "list", params] as const,
+  detail: (slug: string) => [...productKeys.all, "detail", slug] as const,
 };

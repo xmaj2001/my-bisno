@@ -1,8 +1,8 @@
 {
   "seo": {
-    "siteName": "Web App",
-    "homeTitle": "Home Page",
-    "homeDescription": "Welcome to our modern, scalable Next.js application."
+    "siteName": "Bisno",
+    "homeTitle": "Bisno — Connecting Affiliates and Stores",
+    "homeDescription": "The Angolan affiliate platform connecting affiliates, customers and stores."
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -48,5 +48,27 @@
     "inStock": "In stock",
     "outOfStock": "Out of stock",
     "price": "Price"
+  },
+  "catalog": {
+    "title": "Product Catalog",
+    "description": "Explore the full product catalog available for affiliation at Bisno and discover the best commissions.",
+    "subtitle": "Discover trending products and start sharing today.",
+    "allProducts": "All products"
+  },
+  "productsPage": {
+    "title": "All Products",
+    "description": "All products available for affiliates at Bisno, with transparent commissions and guaranteed fulfillment.",
+    "subtitle": "Pick products from the catalog, share with your unique coupon and earn per sale."
+  },
+  "search": {
+    "placeholder": "Search products by name...",
+    "clear": "Clear",
+    "category": "Category",
+    "allCategories": "All categories",
+    "store": "Store",
+    "allStores": "All stores",
+    "showingResults": "Showing results for",
+    "noResults": "No products found.",
+    "tryAdjusting": "Try adjusting your search or filters to find what you are looking for."
   }
 }

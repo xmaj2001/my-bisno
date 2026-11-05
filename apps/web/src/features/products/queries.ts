@@ -1,42 +1,84 @@
-import "server-only";
 import { cache } from "react";
 import { env } from "@/env";
-import { generateMockProducts } from "./mocks/products.mock";
-import type { Product, ProductFilters } from "./types";
+import { apiFetch } from "@/lib/api/api-fetch";
+import {
+  getMockFeaturedProducts,
+  getMockNewProducts,
+  getMockPaginatedProducts,
+  getMockProductBySlug,
+  getMockSearchProducts,
+} from "./mocks/products.mock";
+import type {
+  FeaturedProductsResponse,
+  GetProductsParams,
+  NewProductsResponse,
+  ProductDetailsResponse,
+  ProductSearchResponse,
+  ProductsPageResponse,
+} from "./types";
 
-/**
- * Cached server-side read for products.
- * Uses React cache() for request deduplication.
- */
+// ─── Produtos novos ───────────────────────────────────────────────────────────
+
+export const getNewProducts = cache(async (): Promise<NewProductsResponse> => {
+  if (env.USE_MOCKS) {
+    return getMockNewProducts();
+  }
+  return apiFetch("/products/new");
+});
+
+// ─── Listagem paginada por cursor ─────────────────────────────────────────────
+
 export const getProducts = cache(
-  async (filters?: ProductFilters): Promise<Product[]> => {
+  async (params: GetProductsParams = {}): Promise<ProductsPageResponse> => {
     if (env.USE_MOCKS) {
-      const mockList = generateMockProducts();
-      if (!filters) return mockList;
-
-      return mockList.filter((item) => {
-        if (filters.category && item.category !== filters.category)
-          return false;
-        if (filters.inStockOnly && !item.inStock) return false;
-        if (filters.minPrice && item.price < filters.minPrice) return false;
-        if (filters.maxPrice && item.price > filters.maxPrice) return false;
-        return true;
-      });
+      return getMockPaginatedProducts(params);
     }
 
-    // When USE_MOCKS is false, fetch from actual API / database
-    // Example: const res = await fetch("https://api.example.com/products", { next: { tags: ["products"] } });
-    return [];
+    const qs = new URLSearchParams();
+    if (params.cursor) qs.set("cursor", params.cursor);
+    if (params.cursorPublishedAt)
+      qs.set("cursorPublishedAt", params.cursorPublishedAt);
+    if (params.limit) qs.set("limit", params.limit);
+    if (params.categoryId) qs.set("categoryId", params.categoryId);
+    if (params.storeId) qs.set("storeId", params.storeId);
+    if (params.q) qs.set("q", params.q);
+    const query = qs.toString();
+    return apiFetch(`/products${query ? `?${query}` : ""}`);
   },
 );
 
-export const getProductById = cache(
-  async (id: string): Promise<Product | null> => {
+// ─── Produtos em destaque ─────────────────────────────────────────────────────
+
+export const getFeaturedProducts = cache(
+  async (): Promise<FeaturedProductsResponse> => {
     if (env.USE_MOCKS) {
-      const mockList = generateMockProducts();
-      return mockList.find((p) => p.id === id) ?? null;
+      return getMockFeaturedProducts();
+    }
+    return apiFetch("/products/featured");
+  },
+);
+
+// ─── Pesquisa ─────────────────────────────────────────────────────────────────
+
+export const searchProducts = cache(
+  async (query: string, limit?: number): Promise<ProductSearchResponse> => {
+    if (env.USE_MOCKS) {
+      return getMockSearchProducts(query, limit);
     }
 
-    return null;
+    const qs = new URLSearchParams({ q: query });
+    if (limit) qs.set("limit", String(limit));
+    return apiFetch(`/products/search?${qs.toString()}`);
+  },
+);
+
+// ─── Detalhe por slug ─────────────────────────────────────────────────────────
+
+export const getProductBySlug = cache(
+  async (slug: string): Promise<ProductDetailsResponse> => {
+    if (env.USE_MOCKS) {
+      return getMockProductBySlug(slug);
+    }
+    return apiFetch(`/products/${slug}`);
   },
 );

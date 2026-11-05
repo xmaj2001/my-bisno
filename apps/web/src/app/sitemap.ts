@@ -4,7 +4,7 @@ import { i18n } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
-  const routes = [""];
+  const routes = ["", "/catalog", "/products"];
 
   return routes.flatMap((route) => {
     return i18n.locales.map((lang) => ({

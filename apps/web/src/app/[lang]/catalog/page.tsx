@@ -1,8 +1,40 @@
-export default function CatalogPage() {
-    return (
-        <div>
-            <h1>Catalog</h1>
-            <p>This is the catalog page.</p>
-        </div>
-    );
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ProductList } from "@/features/products/components/product-list/product-list";
+import { ProductSearchFilters } from "@/features/products/components/product-search-filters";
+import { SessionNewProducts } from "@/features/products/components/session-new-products";
+import { isValidLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { constructMetadata } from "@/lib/seo";
+
+interface CatalogPageProps {
+  params: Promise<{ lang: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  
+  const dict = await getDictionary(lang as Locale);
+  return constructMetadata({
+    title: dict.catalog.title,
+    description: dict.catalog.description,
+    lang: lang as Locale,
+    path: "/catalog",
+  });
+}
+
+export default async function CatalogPage({ params }: CatalogPageProps) {
+  const { lang } = await params;
+  if (!isValidLocale(lang)) notFound();
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Sessão de Novos Produtos em Destaque (oculta ao buscar/filtrar) */}
+      <SessionNewProducts />
+    </div>
+  );
 }

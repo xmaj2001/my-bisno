@@ -1,8 +1,8 @@
 {
   "seo": {
-    "siteName": "Web App",
-    "homeTitle": "Página Inicial",
-    "homeDescription": "Bem-vindo à nossa aplicação Next.js moderna e escalável."
+    "siteName": "Bisno",
+    "homeTitle": "Bisno — Conectando Afiliados e Lojas",
+    "homeDescription": "A plataforma angolana de afiliados, conectando afiliados, clientes e lojas."
   },
   "theme": {
     "toggle": "Alternar tema",
@@ -48,5 +48,27 @@
     "inStock": "Em stock",
     "outOfStock": "Esgotado",
     "price": "Preço"
+  },
+  "catalog": {
+    "title": "Catálogo de Produtos",
+    "description": "Explora o catálogo completo de produtos disponíveis para afiliação na Bisno e descobre as melhores comissões de venda.",
+    "subtitle": "Descobre produtos em alta e começa a divulgar hoje mesmo.",
+    "allProducts": "Todos os produtos"
+  },
+  "productsPage": {
+    "title": "Todos os Produtos",
+    "description": "Todos os produtos disponíveis para afiliados na Bisno, com comissões transparentes e envio garantido.",
+    "subtitle": "Escolhe produtos do catálogo, partilha com o teu cupom exclusivo e ganha por cada venda."
+  },
+  "search": {
+    "placeholder": "Pesquisar produtos pelo nome...",
+    "clear": "Limpar",
+    "category": "Categoria",
+    "allCategories": "Todas as categorias",
+    "store": "Loja",
+    "allStores": "Todas as lojas",
+    "showingResults": "A mostrar resultados para",
+    "noResults": "Nenhum produto encontrado.",
+    "tryAdjusting": "Tenta ajustar a tua pesquisa ou filtros para encontrar o que procuras."
   }
 }
