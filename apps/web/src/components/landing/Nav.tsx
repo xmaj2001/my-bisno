@@ -33,11 +33,14 @@ export function Nav() {
       bar.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   });
 
+  // Fundo branco quando scrolled OU quando o menu mobile está aberto
+  const isLight = scrolled || open;
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled
+        isLight
           ? "bg-white/95 backdrop-blur-md border-b border-black/8 py-4 shadow-sm"
           : "bg-transparent py-6",
       )}
@@ -59,14 +62,14 @@ export function Nav() {
           <span
             className={cn(
               "font-display text-lg font-bold tracking-[0.12em] transition-colors duration-500",
-              scrolled ? "text-foreground" : "text-white",
+              isLight ? "text-foreground" : "text-white",
             )}
           >
             Bisno
           </span>
         </a>
 
-        {/* Links desktop */}
+        {/* Links desktop — só visíveis em lg+, isLight usa scrolled aqui pois no desktop open não acontece */}
         <nav className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <a
@@ -106,7 +109,7 @@ export function Nav() {
         <button
           className={cn(
             "flex size-10 items-center justify-center rounded-full border backdrop-blur-md lg:hidden transition-colors",
-            scrolled
+            isLight
               ? "border-black/10 bg-black/5 text-foreground hover:bg-black/10"
               : "border-white/20 bg-white/5 text-white hover:bg-white/10",
           )}
@@ -126,7 +129,7 @@ export function Nav() {
         )}
       >
         <div className="overflow-hidden">
-          <nav className="flex flex-col border-t border-black/10 bg-white px-6 pb-6 pt-4">
+          <nav className="flex flex-col border-t border-black/10 px-6 pb-6 pt-4">
             {links.map((l, i) => (
               <a
                 key={l.href}
