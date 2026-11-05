@@ -1,0 +1,52 @@
+{
+  "seo": {
+    "siteName": "Web App",
+    "homeTitle": "Página Inicial",
+    "homeDescription": "Bem-vindo à nossa aplicação Next.js moderna e escalável."
+  },
+  "theme": {
+    "toggle": "Alternar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  },
+  "network": {
+    "offline": "Sem ligação à internet. Algumas ações foram desativadas.",
+    "backOnline": "Ligação restabelecida!"
+  },
+  "common": {
+    "loading": "A carregar...",
+    "error": "Ocorreu um erro.",
+    "retry": "Tentar novamente"
+  },
+  "error": {
+    "title": "Ups! Algo correu mal",
+    "description": "Encontrámos um erro inesperado ao processar o teu pedido. Podes tentar novamente ou regressar à página inicial.",
+    "retry": "Tentar novamente",
+    "backHome": "Voltar à página inicial",
+    "digest": "Código de diagnóstico:"
+  },
+  "loading": {
+    "title": "A preparar a página...",
+    "subtitle": "A carregar os recursos e componentes mais recentes."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Página não encontrada",
+    "description": "Lamentamos, mas a página que estás à procura não existe, foi movida ou o endereço está incorreto.",
+    "backHome": "Voltar à página inicial",
+    "button": "Voltar à página inicial",
+    "goBack": "Voltar atrás"
+  },
+  "products": {
+    "title": "Produtos em Destaque",
+    "description": "Explora a nossa seleção com carregamento no servidor e componentes interativos.",
+    "featuredCarousel": "Carrossel Interativo",
+    "addToCart": "Adicionar ao carrinho",
+    "addingToCart": "A adicionar...",
+    "addedToCart": "Adicionado ao carrinho!",
+    "inStock": "Em stock",
+    "outOfStock": "Esgotado",
+    "price": "Preço"
+  }
+}

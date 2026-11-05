@@ -1,0 +1,52 @@
+{
+  "seo": {
+    "siteName": "Web App",
+    "homeTitle": "Home Page",
+    "homeDescription": "Welcome to our modern, scalable Next.js application."
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "network": {
+    "offline": "No internet connection. Some actions are disabled.",
+    "backOnline": "Connection restored!"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred.",
+    "retry": "Try again"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "description": "We encountered an unexpected error while processing your request. You can try again or return to the home page.",
+    "retry": "Try again",
+    "backHome": "Back to home page",
+    "digest": "Diagnostic code:"
+  },
+  "loading": {
+    "title": "Preparing the page...",
+    "subtitle": "Loading the latest resources and components."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "description": "Sorry, the page you are looking for does not exist, has been moved, or the URL is incorrect.",
+    "backHome": "Back to home page",
+    "button": "Back to home page",
+    "goBack": "Go back"
+  },
+  "products": {
+    "title": "Featured Products",
+    "description": "Explore our selection with server-rendered data and interactive components.",
+    "featuredCarousel": "Interactive Carousel",
+    "addToCart": "Add to cart",
+    "addingToCart": "Adding...",
+    "addedToCart": "Added to cart!",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "price": "Price"
+  }
+}
