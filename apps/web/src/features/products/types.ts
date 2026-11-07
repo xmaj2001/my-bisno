@@ -16,22 +16,44 @@ export type Product = {
   earning: string;
   image: string;
 };
-
-export type FeaturedProduct = Product & {
-  featured: boolean;
-  rank?: number;
+export type FeaturedProduct = {
+  id: string; // Adicionado para chaves de mapeamento únicas
+  title: string;
+  subtitle: string;
+  description: string;
+  backdrop: string;
+  aspectRatio?: number;
+  specifications: {
+    key: string;
+    value: string;
+  }[];
+  product: Product;
 };
 
-export type APIProductDetails = Product & {
-  storeId: string;
-  storeName: string;
-  storeWhatsapp: string;
-  categoryId: string;
-  categoryName: string;
-  stock: number;
-  publishedAt: string;
-  createdAt: string;
-  updatedAt: string;
+
+
+interface spec {
+  label: string;
+  value: string;
+}
+
+interface affiliateInfo {
+  coupon: string;
+  isActive: boolean;
+}
+
+export type APIProductDetails = {
+  id: string;
+  slug: string;
+  name: string;
+  earning: string;
+  description: string;
+  price: string;
+  commission: number;
+  images: string[];
+  category: string;
+  specs: spec[];
+  affiliateInfo: affiliateInfo | null;
 };
 
 // ─── Params dos endpoints ─────────────────────────────────────────────────────

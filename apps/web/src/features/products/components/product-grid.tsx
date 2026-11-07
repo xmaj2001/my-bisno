@@ -1,8 +1,8 @@
-import type { Product } from "../../types";
+import type { Product } from "../types";
 import {
   ProductItem,
   ProducttItemSkeleton,
-} from "../product-list/product-item";
+} from "./product-item";
 
 interface ProductGridProps {
   items: Product[];

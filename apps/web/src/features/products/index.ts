@@ -1,7 +1,7 @@
 export {
   ProductGrid,
   SkeletonGrid,
-} from "./components/product-list/product-grid";
+} from "./components/product-grid";
 export { ProductList } from "./components/product-list/product-list";
 export { ProductListContent } from "./components/product-list/product-list-content";
 export { ProductListInfinite } from "./components/product-list/product-list-infinite";

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import type { ApiCursorEnvelope } from "@/lib/api/types";
 import { useProductsInfinite } from "../../hooks/use-products-infinite";
 import type { GetProductsParams, Product } from "../../types";
-import { ProductItem, ProducttItemSkeleton } from "./product-item";
+import { ProductItem, ProducttItemSkeleton } from "../product-item";
 
 const FETCH_SKELETON_KEYS = [
   "fetch-s-1",

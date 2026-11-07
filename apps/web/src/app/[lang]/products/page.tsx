@@ -1,9 +1,13 @@
+// exportar de forma dinâmica a página de produtos, para que o Next.js não faça cache da página e sempre busque os produtos mais recentes do banco de dados.
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductList, ProductSearchFilters } from "@/features/products";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
+import { Footer } from "@/components/footer";
 
 interface ProductsPageProps {
   params: Promise<{ lang: string }>;
@@ -60,13 +64,14 @@ export default async function ProductsPage({
 
         {/* Listagem com Infinite Scroll */}
         {resolvedSearchParams.q && (
-            <p className="mb-4 text-sm text-muted-foreground">
-              {dict.search.showingResults} &ldquo;{resolvedSearchParams.q}
-              &rdquo;
-            </p>
-          )}
-          <ProductList params={resolvedSearchParams} />
+          <p className="mb-4 text-sm text-muted-foreground">
+            {dict.search.showingResults} &ldquo;{resolvedSearchParams.q}
+            &rdquo;
+          </p>
+        )}
+        <ProductList params={resolvedSearchParams} />
       </div>
+      <Footer />
     </main>
   );
 }

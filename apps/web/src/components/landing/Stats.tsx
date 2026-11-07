@@ -2,7 +2,7 @@
 
 import { MapPin, Tags, Users } from "lucide-react";
 import Image from "next/image";
-import { MaskedLines, Reveal, useInView } from "./Reveal";
+import { MaskedLines, Reveal, useInView } from "../Reveal";
 import { SectionLabel } from "./SectionLabel";
 
 const features = [

@@ -6,8 +6,8 @@ import headphones from "@/assets/product-headphones.jpg";
 import perfume from "@/assets/product-perfume.jpg";
 import sneaker from "@/assets/product-sneaker.jpg";
 import { cn } from "@/lib/utils";
-import { Parallax } from "./Parallax";
-import { MaskedLines, Reveal } from "./Reveal";
+import { Parallax } from "../Parallax";
+import { MaskedLines, Reveal } from "../Reveal";
 import { SectionLabel } from "./SectionLabel";
 
 const tabs = ["Em destaque", "Recomendados", "Novos", "Em alta"] as const;

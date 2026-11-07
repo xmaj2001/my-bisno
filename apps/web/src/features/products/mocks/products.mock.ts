@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import type {
   APIProductDetails,
+  FeaturedProduct,
   FeaturedProductsResponse,
   GetProductsParams,
   NewProductsResponse,
@@ -86,15 +87,26 @@ export function getMockPaginatedProducts(
 }
 
 export function getMockFeaturedProducts(): FeaturedProductsResponse {
-  const products = generateMockProducts(4).map((p, idx) => ({
-    ...p,
-    featured: true,
-    rank: idx + 1,
+  const baseProducts = generateMockProducts(4);
+
+  const featuredProducts: FeaturedProduct[] = baseProducts.map((p, idx) => ({
+    id: `feat-${idx + 1}`,
+    title: `Destaque Especial #${idx + 1}`,
+    subtitle: "Oportunidade Limitada",
+    description: p.description,
+    backdrop: `https://picsum.photos/seed/backdrop-${idx + 1}/1200/600`,
+    aspectRatio: 16 / 9,
+    specifications: [
+      { key: "Comissão", value: p.earning },
+      { key: "Preço Base", value: p.price },
+      { key: "Garantia", value: "Oficial da Marca" },
+    ],
+    product: p,
   }));
 
   return {
     success: true,
-    data: products,
+    data: featuredProducts,
     ts: MOCK_TIMESTAMP,
   };
 }
@@ -126,15 +138,10 @@ export function getMockProductBySlug(slug: string): ProductDetailsResponse {
 
   const productDetails: APIProductDetails = {
     ...found,
-    storeId: "store-1",
-    storeName: "Loja Oficial Bisno",
-    storeWhatsapp: "+244923000000",
-    categoryId: "cat-1",
-    categoryName: "Eletrónicos",
-    stock: 25,
-    publishedAt: MOCK_TIMESTAMP,
-    createdAt: MOCK_TIMESTAMP,
-    updatedAt: MOCK_TIMESTAMP,
+    images: [found.image],
+    category: "Teste",
+    specs: [],
+    affiliateInfo: null,
   };
 
   return {

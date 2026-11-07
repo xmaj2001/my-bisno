@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { SIGNUP_URL } from "./constants";
-import { useScrollFrame } from "./Parallax";
+import { useScrollFrame } from "../Parallax";
 
 export function Hero() {
   const img = useRef<HTMLDivElement>(null);

@@ -4,8 +4,8 @@ import { Ban, Package, Smartphone, Truck, UserX, Wallet } from "lucide-react";
 import { useState } from "react";
 import { commissionFor, formatKz } from "@/lib/commission";
 import { cn } from "@/lib/utils";
-import { Parallax } from "./Parallax";
-import { MaskedLines, Reveal } from "./Reveal";
+import { Parallax } from "../Parallax";
+import { MaskedLines, Reveal } from "../Reveal";
 import { SectionLabel } from "./SectionLabel";
 import { LogoMark } from "../logo-mark";
 
@@ -49,7 +49,14 @@ export function NoHassle() {
                   ci === 0 && "md:translate-y-10",
                 )}
               >
-                <p className="eyebrow text-primary">{col.title}</p>
+                <p
+                  className={cn(
+                    "eyebrow",
+                    ci == 1 ? "text-black" : "text-primary",
+                  )}
+                >
+                  {col.title}
+                </p>
                 <ul className="mt-10">
                   {col.items.map((it, i) => (
                     <li
@@ -59,7 +66,7 @@ export function NoHassle() {
                       <span className="font-wide text-xs font-bold text-muted-foreground">
                         0{i + 1}
                       </span>
-                      <span className="flex size-11 shrink-0 items-center justify-center bg-primary text-primary-foreground transition-transform duration-500 group-hover:-rotate-6">
+                      <span className="flex size-11 shrink-0 rounded-xs items-center justify-center bg-primary text-primary-foreground transition-transform duration-500 group-hover:-rotate-6">
                         <it.icon className="size-5" />
                       </span>
                       <span className="text-lg font-medium">{it.label}</span>

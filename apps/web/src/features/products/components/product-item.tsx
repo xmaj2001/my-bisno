@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatKz } from "@/lib/utils";
-import type { Product } from "../../types";
+import type { Product } from "../types";
 
 interface ProductItemProps {
   product: Product;

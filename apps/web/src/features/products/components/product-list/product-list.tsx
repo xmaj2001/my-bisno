@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { GetProductsParams } from "../../types";
-import { SkeletonGrid } from "./product-grid";
+import { SkeletonGrid } from "../product-grid";
 import { ProductListContent } from "./product-list-content";
 
 export function ProductList({ params = {} }: { params?: GetProductsParams }) {

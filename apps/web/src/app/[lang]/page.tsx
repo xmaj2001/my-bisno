@@ -1,18 +1,14 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ModeToggle } from "@/components/mode-toggle";
-import { ProductGrid } from "@/features/products";
-import { i18n, isValidLocale, type Locale } from "@/i18n/config";
+import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
 import { Hero } from "@/components/landing/Hero";
 import { NoHassle, Commission } from "@/components/landing/Benefits";
-import { Catalog } from "@/components/landing/Catalog";
-import { Faq, FinalCta, Footer } from "@/components/landing/Closing";
+import { Faq, FinalCta } from "@/components/landing/Closing";
 import { Flow } from "@/components/landing/Flow";
 import { Steps } from "@/components/landing/Steps";
 import { Stats } from "@/components/landing/Stats";
-import { Nav } from "@/components/landing/Nav";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/footer";
 
 interface PageProps {
   params: Promise<{ lang: string }>;

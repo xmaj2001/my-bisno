@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { LogoMark } from "../logo-mark";
+import { LogoMark } from "./logo-mark";
 
 
 export function Logo({ className }: { className?: string }) {

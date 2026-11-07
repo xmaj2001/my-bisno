@@ -4,8 +4,8 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { LogoMark } from "../logo-mark";
-import { SIGNUP_URL } from "./constants";
+import { LogoMark } from "./logo-mark";
+import { SIGNUP_URL } from "./landing/constants";
 import { useScrollFrame } from "./Parallax";
 
 const links = [

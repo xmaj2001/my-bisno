@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Reveal } from "./Reveal";
+import { Reveal } from "../Reveal";
 
 /** "01 ——— Catálogo": numbered label that opens every section. */
 export function SectionLabel({

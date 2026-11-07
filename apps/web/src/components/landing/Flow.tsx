@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { STORE_MESSAGE } from "./constants";
 import { PhoneScreen } from "./PhoneScreens";
-import { MaskedLines, Reveal } from "./Reveal";
+import { MaskedLines, Reveal } from "../Reveal";
 import { SectionLabel } from "./SectionLabel";
 
 type Actor = "Afiliado" | "Cliente" | "Loja";

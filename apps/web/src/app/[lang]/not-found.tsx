@@ -45,7 +45,7 @@ export default function NotFound() {
           </div>
 
           <h1 className="text-7xl lg:text-8xl font-extrabold tracking-tight text-white drop-shadow-md">
-            404xxxxxxxx
+            404
           </h1>
 
           <h2 className="mt-3 text-xl lg:text-2xl font-bold text-white tracking-tight">

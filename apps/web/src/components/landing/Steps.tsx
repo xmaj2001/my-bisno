@@ -1,6 +1,6 @@
 import { LayoutGrid, Megaphone, Percent, Ticket } from "lucide-react";
-import { Parallax } from "./Parallax";
-import { MaskedLines, Reveal } from "./Reveal";
+import { Parallax } from "../Parallax";
+import { MaskedLines, Reveal } from "../Reveal";
 import { SectionLabel } from "./SectionLabel";
 import { LogoMark } from "../logo-mark";
 

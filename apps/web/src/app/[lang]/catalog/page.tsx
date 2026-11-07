@@ -6,6 +6,9 @@ import { SessionNewProducts } from "@/features/products/components/session-new-p
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
+import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
+import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
+import { Footer } from "@/components/footer";
 
 interface CatalogPageProps {
   params: Promise<{ lang: string }>;
@@ -17,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  
+
   const dict = await getDictionary(lang as Locale);
   return constructMetadata({
     title: dict.catalog.title,
@@ -29,12 +32,17 @@ export async function generateMetadata({
 
 export default async function CatalogPage({ params }: CatalogPageProps) {
   const { lang } = await params;
-  if (!isValidLocale(lang)) notFound();
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Sessão de Novos Produtos em Destaque (oculta ao buscar/filtrar) */}
-      <SessionNewProducts />
+      <div className="mb-10">
+        {/* Sessão de Produtos em Destaque */}
+        <SessionFeaturedProducts />
+        {/* Sessão de Novos Produtos */}
+        <SessionNewProducts />
+        {/* Sessão de Produtos Recomendados */}
+        <SessionRecommendedProducts />
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -26,6 +26,17 @@ export const getNewProducts = cache(async (): Promise<NewProductsResponse> => {
   return apiFetch("/products/new");
 });
 
+// ─── Produtos recomendados ────────────────────────────────────────────────────
+
+export const getRecommendedProducts = cache(
+  async (): Promise<NewProductsResponse> => {
+    if (env.USE_MOCKS) {
+      return getMockNewProducts();
+    }
+    return apiFetch("/products/recommended");
+  },
+);
+
 // ─── Listagem paginada por cursor ─────────────────────────────────────────────
 
 export const getProducts = cache(

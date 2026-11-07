@@ -4,7 +4,7 @@ import { AnimatedLogo } from "@/components/AnimatedLogo";
 
 export default function Loading() {
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden px-4">
+    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden px-4 bg-black">
       {/* 1. Imagem de fundo */}
       <Image
         src="/hero-night-doorway.jpg"
