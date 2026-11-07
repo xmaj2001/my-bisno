@@ -8,6 +8,10 @@ import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
 import { Footer } from "@/components/footer";
+import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
+import { SessionNewProducts } from "@/features/products/components/session-new-products";
+import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
+import { ProductNavbar } from "@/components/product-navbar";
 
 interface ProductsPageProps {
   params: Promise<{ lang: string }>;
@@ -47,6 +51,13 @@ export default async function ProductsPage({
 
   return (
     <main className="min-h-screen bg-background">
+      <ProductNavbar lang={lang} />
+      {/* Sessão de Produtos em Destaque */}
+      <SessionFeaturedProducts />
+      {/* Sessão de Novos Produtos */}
+      <SessionNewProducts />
+      {/* Sessão de Produtos Recomendados */}
+      <SessionRecommendedProducts />
       <div className="mx-auto max-w-7xl px-4 pt-28 sm:px-6 lg:px-8">
         <header className="animate-fade-up text-center sm:text-left">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">

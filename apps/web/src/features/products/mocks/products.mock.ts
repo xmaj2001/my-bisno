@@ -136,12 +136,30 @@ export function getMockProductBySlug(slug: string): ProductDetailsResponse {
   const allProducts = generateMockProducts(24);
   const found = allProducts.find((p) => p.slug === slug) ?? allProducts[0];
 
+  // Gerar algumas especificações técnicas realistas para o mock
+  const mockSpecs: { label: string; value: string }[] = [
+    { label: "Garantia", value: "1 Ano pelo Fabricante" },
+    { label: "Disponibilidade", value: "Em Stock" },
+    { label: "Envio", value: "Para toda Luanda e Províncias" },
+    { label: "Condição", value: "Novo e Original" },
+  ];
+
+  // Simular múltiplas imagens para a galeria de detalhes
+  const mockImages = [
+    found.image,
+    `https://picsum.photos/seed/${found.id}-2/800/800`,
+    `https://picsum.photos/seed/${found.id}-3/800/800`,
+  ];
+
   const productDetails: APIProductDetails = {
     ...found,
-    images: [found.image],
-    category: "Teste",
-    specs: [],
-    affiliateInfo: null,
+    images: mockImages,
+    category: "Eletrónicos & Utilidades",
+    specs: mockSpecs,
+    affiliateInfo: {
+      coupon: `BISNO-${found.id.toUpperCase()}`,
+      isActive: true,
+    },
   };
 
   return {

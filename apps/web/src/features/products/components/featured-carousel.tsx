@@ -29,10 +29,13 @@ export const FeaturedCarousel = ({ items }: FeaturedCarouselProps) => {
   return (
     <div className="w-full relative">
       <span
-        className="absolute -inset-3 border border-primary/40"
+        className="absolute -inset-3 border border-primary/40 sm:hidden"
         aria-hidden
       />
-      <span className="absolute -inset-6 border border-border" aria-hidden />
+      <span
+        className="absolute -inset-6 border border-border sm:hidden"
+        aria-hidden
+      />
       <Carousel
         plugins={[plugin.current]}
         opts={{
@@ -121,7 +124,10 @@ export const FeaturedCarousel = ({ items }: FeaturedCarouselProps) => {
         </CarouselContent>
 
         {/* Setas de navegação discretas */}
-        <CarouselPrevious variant={"hero"} className="left-4 backdrop-blur-md" />
+        <CarouselPrevious
+          variant={"hero"}
+          className="left-4 backdrop-blur-md"
+        />
         <CarouselNext variant={"hero"} className="right-4 backdrop-blur-md" />
       </Carousel>
     </div>

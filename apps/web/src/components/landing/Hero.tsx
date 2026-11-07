@@ -2,8 +2,8 @@
 
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SIGNUP_URL } from "./constants";
 import { useScrollFrame } from "../Parallax";
 
 export function Hero() {
@@ -36,7 +36,7 @@ export function Hero() {
         />
       </div>
 
-      {/* Overlay escuro gradiente — replica o estilo da referência */}
+      {/* Overlay escuro gradiente */}
       <div className="absolute inset-0 bg-gradient-to-r from-night/65 via-night/30 to-night/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-night/8 via-transparent to-transparent" />
 
@@ -76,7 +76,7 @@ export function Hero() {
           lojas.
         </p>
 
-        {/* CTA */}
+        {/* CTA (Ver Catálogo -> /products) */}
         <div className="animate-rise mt-10" style={{ animationDelay: "950ms" }}>
           <Button
             asChild
@@ -84,9 +84,9 @@ export function Hero() {
             size="lg"
             className="rounded-full px-8"
           >
-            <a href={SIGNUP_URL}>
-              Iniciar Sessão <ArrowRight className="ml-1 size-4" />
-            </a>
+            <Link href="/products">
+              Ver Catálogo <ArrowRight className="ml-1 size-4" />
+            </Link>
           </Button>
         </div>
       </div>

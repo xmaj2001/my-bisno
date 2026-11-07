@@ -2,10 +2,10 @@
 
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LogoMark } from "./logo-mark";
-import { SIGNUP_URL } from "./landing/constants";
 import { useScrollFrame } from "./Parallax";
 
 const links = [
@@ -34,7 +34,6 @@ export function Nav() {
       bar.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   });
 
-  // Fundo branco quando scrolled OU quando o menu mobile está aberto
   const isLight = scrolled || open;
 
   return (
@@ -55,7 +54,7 @@ export function Nav() {
       <div
         className={cn(
           "mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12",
-          isLight && open? "sm:mb-4" : "",
+          isLight && open ? "sm:mb-4" : "",
         )}
       >
         {/* Logo */}
@@ -75,7 +74,7 @@ export function Nav() {
           </span>
         </a>
 
-        {/* Links desktop — só visíveis em lg+, isLight usa scrolled aqui pois no desktop open não acontece */}
+        {/* Links desktop */}
         <nav className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <a
@@ -93,7 +92,7 @@ export function Nav() {
           ))}
         </nav>
 
-        {/* CTA desktop */}
+        {/* CTA desktop (Entrar -> /login) */}
         <div className="hidden lg:block">
           <Button
             asChild
@@ -105,9 +104,9 @@ export function Nav() {
                 "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white",
             )}
           >
-            <a href={SIGNUP_URL}>
+            <Link href="/auth/login">
               Entrar <span aria-hidden>→</span>
-            </a>
+            </Link>
           </Button>
         </div>
 
@@ -155,9 +154,9 @@ export function Nav() {
               size="lg"
               className="mt-6 w-full rounded-full"
             >
-              <a href={SIGNUP_URL} onClick={() => setOpen(false)}>
+              <Link href="/auth/login" onClick={() => setOpen(false)}>
                 Entrar →
-              </a>
+              </Link>
             </Button>
           </nav>
         </div>
