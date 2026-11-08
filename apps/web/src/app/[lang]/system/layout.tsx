@@ -17,9 +17,7 @@ import type { Locale } from "@/i18n/config";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  params: {
-    lang: Locale;
-  };
+  params:Promise<{ lang: Locale }>;
 }
 
 export default async function DashboardLayout({
