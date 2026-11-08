@@ -13,17 +13,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import type { Locale } from "@/i18n/config";
-
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-  params:Promise<{ lang: Locale }>;
-}
 
 export default async function DashboardLayout({
   children,
   params,
-}: DashboardLayoutProps) {
+}: LayoutProps) {
   const { lang } = await params;
 
   return (
