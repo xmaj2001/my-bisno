@@ -17,7 +17,7 @@ import {
 export default async function DashboardLayout({
   children,
   params,
-}: LayoutProps) {
+}: LayoutProps<"/[lang]/system">) {
   const { lang } = await params;
 
   return (
