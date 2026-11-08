@@ -8,3 +8,11 @@ export const signUpSchema = z.object({
 });
 
 export type SignUpValues = z.infer<typeof signUpSchema>;
+
+export const claudeAuthSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Por favor, insira um endereço de e-mail válido." }),
+});
+
+export type ClaudeAuthValues = z.infer<typeof claudeAuthSchema>;

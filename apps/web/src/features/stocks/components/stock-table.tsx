@@ -147,7 +147,6 @@ export function StockTable({ data, globalFilter }: StockTableProps) {
     features: stockFeatures,
     data,
     columns,
-    state: { globalFilter },
   });
 
   return (
