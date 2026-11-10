@@ -39,7 +39,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
         </button>
 
         <div className="absolute inset-x-2 bottom-2 z-10 flex items-center justify-between gap-2 rounded-md bg-neutral-900 px-2.5 py-1.5 text-deep-foreground">
-          <span className="text-[10px] uppercase tracking-wider opacity-70">
+          <span className="text-[10px] text-primary uppercase tracking-wider opacity-70">
             Ganhe
           </span>
           <span className="whitespace-nowrap text-xs font-semibold text-primary">

@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export const SessionNewProducts = () => {
   return (
-    <div id="new" className="mx-auto max-w-7xl scroll-mt-20 px-4 pt-24">
+    <div id="new" className="mx-auto max-w-7xl scroll-mt-20 px-4 mb-4">
       {/* Cabeçalho com Título e Botão "Ver mais" */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-2">
         <div>

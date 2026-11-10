@@ -116,7 +116,7 @@ export function Nav() {
             "flex size-10 items-center justify-center rounded-full border backdrop-blur-md lg:hidden transition-colors",
             isLight
               ? "border-black/10 bg-black/5 text-black hover:bg-black/10"
-              : "border-white/20 bg-white/5 text-foreground hover:bg-white/10",
+              : "border-white/20 bg-white/5 text-white hover:bg-white/10",
           )}
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}

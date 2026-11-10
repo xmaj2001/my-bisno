@@ -4,10 +4,11 @@ import { cache } from "react";
 import { env } from "@/env";
 import type {
   GetStockParams,
+  StockDetailsResponse,
   StockListResponse,
   StockPageResponse,
 } from "./types";
-import { getMockStock } from "./mocks/stock.mock"; // ou o teu ficheiro de mocks correspondente
+import { getMockStock, getMockStockId } from "./mocks/stock.mock"; // ou o teu ficheiro de mocks correspondente
 import { apiFetch } from "@/lib/api/api-fetch";
 
 // ─── Listagem completa ou filtrada de stock ──────────────────────────────────
@@ -42,5 +43,16 @@ export const getStockList = cache(
 
     const query = qs.toString();
     return apiFetch(`/stock${query ? `?${query}` : ""}`);
+  },
+);
+
+// ─── Detalhe por slug ─────────────────────────────────────────────────────────
+
+export const getStockById = cache(
+  async (id: string): Promise<StockDetailsResponse> => {
+    if (env.USE_MOCKS) {
+      return getMockStockId(id);
+    }
+    return apiFetch(`/stock/${id}`);
   },
 );

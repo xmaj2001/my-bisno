@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const SessionFeaturedProducts = () => {
   return (
-    <section className="mx-auto max-w-7xl  pt-10">
+    <section className="mx-auto max-w-7xl py-10">
       <Suspense fallback={<SkeletonFeaturedCarousel />}>
         <FeaturedProductsContent />
       </Suspense>
@@ -25,7 +25,7 @@ const FeaturedProductsContent = async () => {
 const SkeletonFeaturedCarousel = () => {
   return (
     <div className="w-full py-6">
-      <Skeleton className="h-[400px] sm:h-[480px] w-full rounded-2xl" />
+      <Skeleton className="h-[400px] sm:h-[480px] w-full rounded-lg" />
     </div>
   );
 };

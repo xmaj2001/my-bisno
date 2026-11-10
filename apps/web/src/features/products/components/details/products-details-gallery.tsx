@@ -3,15 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 
 interface ProductDetailsGalleryProps {
   gallery: string[];
   productName: string;
+  downloadImage?: boolean;
 }
 
 export const ProductDetailsGallery = ({
   gallery,
   productName,
+  downloadImage = false,
 }: ProductDetailsGalleryProps) => {
   const [selectedImg, setSelectedImg] = useState(0);
 
@@ -27,6 +31,16 @@ export const ProductDetailsGallery = ({
     <div className="flex flex-col gap-3">
       {/* Imagem Principal */}
       <div className="relative aspect-square w-full overflow-hidden rounded-xl border bg-card shadow-sm">
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          className={cn(
+            "absolute z-40 m-4 right-1 text-white shadow",
+            !downloadImage ? "hidden" : "",
+          )}
+        >
+          <Download />
+        </Button>
         <Image
           src={gallery[selectedImg]}
           alt={productName}
@@ -49,7 +63,7 @@ export const ProductDetailsGallery = ({
                 "relative aspect-square w-full overflow-hidden rounded-lg border-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 index === selectedImg
                   ? "border-primary ring-2 ring-primary/20 opacity-100"
-                  : "border-transparent opacity-60 hover:opacity-100"
+                  : "border-transparent opacity-60 hover:opacity-100",
               )}
             >
               <Image

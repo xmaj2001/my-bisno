@@ -15,7 +15,7 @@ interface StockItemGridProps {
 export function StockItemGrid({ item }: StockItemGridProps) {
   return (
     <Link
-      href=""
+      href={`/system/stocks/${item.id}`}
       className="group flex flex-col overflow-hidden rounded-xs border bg-background p-4 transition-all hover:shadow-md"
     >
       <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-secondary mb-3">
@@ -27,7 +27,7 @@ export function StockItemGrid({ item }: StockItemGridProps) {
         />
         <div className="absolute top-2 right-2">
           <Badge
-          className="uppercase"
+            className="uppercase"
             variant={
               item.status === "disponivel"
                 ? "default"

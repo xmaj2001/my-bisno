@@ -1,5 +1,11 @@
 import { faker } from "@faker-js/faker";
-import type { StockItem } from "../types";
+import type {
+  StockDetailsResponse,
+  StockItem,
+  StockItemDetails,
+} from "../types";
+
+const MOCK_TIMESTAMP = "2026-11-05T00:00:00.000Z";
 
 export function getMockStock(count = 16): StockItem[] {
   faker.seed(123); // Seed determinístico para evitar erros de hidratação
@@ -31,4 +37,41 @@ export function getMockStock(count = 16): StockItem[] {
       image: `https://picsum.photos/seed/stock-${index + 1}/600/600`,
     };
   });
+}
+
+export function getMockStockId(id: string): StockDetailsResponse {
+  const allProducts = getMockStock(24);
+  const found = allProducts.find((p) => p.id === id) ?? allProducts[0];
+
+  // Gerar algumas especificações técnicas realistas para o mock
+  const mockSpecs: { label: string; value: string }[] = [
+    { label: "Garantia", value: "1 Ano pelo Fabricante" },
+    { label: "Disponibilidade", value: "Em Stock" },
+    { label: "Envio", value: "Para toda Luanda e Províncias" },
+    { label: "Condição", value: "Novo e Original" },
+  ];
+
+  // Simular múltiplas imagens para a galeria de detalhes
+  const mockImages = [
+    found.image,
+    `https://picsum.photos/seed/${found.id}-2/800/800`,
+    `https://picsum.photos/seed/${found.id}-3/800/800`,
+  ];
+
+  const stockDetails: StockItemDetails = {
+    ...found,
+    slug: "",
+    description: "ww",
+    images: mockImages,
+    category: "Eletrónicos & Utilidades",
+    specs: mockSpecs,
+    earning: "50",
+    coupon: "Test",
+  };
+
+  return {
+    success: true,
+    data: stockDetails,
+    ts: MOCK_TIMESTAMP,
+  };
 }

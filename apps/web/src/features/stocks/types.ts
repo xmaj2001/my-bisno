@@ -12,6 +12,27 @@ export type StockItem = {
   image: string;
 };
 
+interface spec {
+  label: string;
+  value: string;
+}
+export type StockItemDetails = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  price: string;
+  commission: string;
+  stock: number;
+  earning: string;
+  status: "disponivel" | "baixo" | "esgotado";
+  images: string[];
+  category: string;
+  
+  coupon: string;
+  specs: spec[];
+};
+
 // ─── Params dos endpoints ─────────────────────────────────────────────────────
 export interface GetStockParams {
   cursor?: string;
@@ -30,4 +51,4 @@ export type StockListResponse = ApiEnvelope<StockItem[]>;
 export type StockPageResponse = ApiEnvelope<ApiCursorEnvelope<StockItem>>;
 
 /** GET /v1/stock/:id */
-export type StockDetailsResponse = ApiEnvelope<StockItem>;
+export type StockDetailsResponse = ApiEnvelope<StockItemDetails>;

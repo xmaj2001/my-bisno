@@ -22,7 +22,7 @@ const CAROUSEL_SKELETON_KEYS = [
 
 export const ProductCarousel = ({ items, isLoading }: ProductCarouselProps) => {
   return (
-    <div className="relative mt-8 px-4 sm:px-0">
+    <div className="relative mt-8 sm:px-0">
       <Carousel
         opts={{
           align: "start",
@@ -57,8 +57,14 @@ export const ProductCarousel = ({ items, isLoading }: ProductCarouselProps) => {
         </CarouselContent>
 
         {/* Botões de navegação (aparecem nas laterais em ecrãs maiores) */}
-        <CarouselPrevious variant={"hero"} className="-left-6" />
-        <CarouselNext variant={"hero"}  className="-right-6" />
+        <CarouselPrevious
+          variant={"hero"}
+          className="-left-6 hidden sm:inline-flex"
+        />
+        <CarouselNext
+          variant={"hero"}
+          className="-right-6 hidden sm:inline-flex"
+        />
       </Carousel>
     </div>
   );

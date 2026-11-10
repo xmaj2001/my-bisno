@@ -1,26 +1,50 @@
-export default function DashboardPage() {
+export const dynamic = "force-dynamic";
+
+import { ProductList, ProductSearchFilters } from "@/features/products";
+import { isValidLocale, Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { notFound } from "next/navigation";
+
+interface DashboardPageProps {
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{
+    q?: string;
+    categoryId?: string;
+    storeId?: string;
+  }>;
+}
+
+export default async function DashboardPage({
+  params,
+  searchParams,
+}: DashboardPageProps) {
+  const { lang } = await params;
+  if (!isValidLocale(lang)) notFound();
+
+  const dict = await getDictionary(lang as Locale);
+  const resolvedSearchParams = await searchParams;
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold tracking-tight">Bem-vindo ao Painel</h1>
-      <p className="text-muted-foreground text-sm">
-        Aqui podes gerir os teus produtos, comissões e estatísticas de afiliado.
-      </p>
+      <header className="animate-fade-up flex flex-col items-center">
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+          {dict.productsPage.title}
+        </h1>
+        <p className="mt-3 max-w-2xl text-base text-muted-foreground">
+          {dict.productsPage.subtitle}
+        </p>
+      </header>
 
-      {/* Exemplo de secção de conteúdo */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-4">
-        <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <h3 className="font-semibold text-sm text-muted-foreground">
-            Vendas Totais
-          </h3>
-          <p className="text-2xl font-bold mt-2">0 Kz</p>
-        </div>
-        <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <h3 className="font-semibold text-sm text-muted-foreground">
-            Comissões Pendentes
-          </h3>
-          <p className="text-2xl font-bold mt-2">0 Kz</p>
-        </div>
-      </div>
+      {/* Filtros e Busca */}
+        <ProductSearchFilters dictionary={dict.search} />
+
+      {/* Listagem com Infinite Scroll */}
+      {resolvedSearchParams.q && (
+        <p className="mb-4 text-sm text-muted-foreground">
+          {dict.search.showingResults} &ldquo;{resolvedSearchParams.q}
+          &rdquo;
+        </p>
+      )}
+      <ProductList params={resolvedSearchParams} />
     </div>
   );
 }

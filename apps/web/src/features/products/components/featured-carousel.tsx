@@ -29,11 +29,11 @@ export const FeaturedCarousel = ({ items }: FeaturedCarouselProps) => {
   return (
     <div className="w-full relative">
       <span
-        className="absolute -inset-3 border border-primary/40 sm:hidden"
+        className="absolute -inset-3 border border-primary/40 hidden md:block"
         aria-hidden
       />
       <span
-        className="absolute -inset-6 border border-border sm:hidden"
+        className="absolute -inset-6 border border-border hidden md:block rounded-md"
         aria-hidden
       />
       <Carousel
@@ -47,7 +47,7 @@ export const FeaturedCarousel = ({ items }: FeaturedCarouselProps) => {
         <CarouselContent>
           {items.map((feat) => (
             <CarouselItem key={feat.id}>
-              <div className="relative overflow-hidden bg-card text-card-foreground shadow-sm">
+              <div className="relative overflow-hidden bg-card text-card-foreground shadow-sm rounded-lg">
                 {/* Imagem de Fundo (Backdrop) com overlay escuro para contraste */}
                 <div className="absolute inset-0 z-0">
                   <Image

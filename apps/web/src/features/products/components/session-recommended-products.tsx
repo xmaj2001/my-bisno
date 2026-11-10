@@ -9,7 +9,7 @@ export const SessionRecommendedProducts = () => {
   return (
     <section
       id="recommended"
-      className="mx-auto max-w-7xl scroll-mt-20 px-4 pt-24"
+      className="mx-auto max-w-7xl scroll-mt-20 px-4"
     >
       {/* Cabeçalho com Título e Botão "Ver mais" */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-2">

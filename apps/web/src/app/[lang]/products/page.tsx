@@ -58,6 +58,7 @@ export default async function ProductsPage({
       <SessionNewProducts />
       {/* Sessão de Produtos Recomendados */}
       <SessionRecommendedProducts />
+      <div className="flex flex-col gap-4 w-full"></div>
       <div className="mx-auto max-w-7xl px-4 pt-28 sm:px-6 lg:px-8">
         <header className="animate-fade-up text-center sm:text-left">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
