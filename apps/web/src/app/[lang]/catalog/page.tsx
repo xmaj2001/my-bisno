@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Footer } from "@/components/footer";
 import { ProductList } from "@/features/products/components/product-list/product-list";
 import { ProductSearchFilters } from "@/features/products/components/product-search-filters";
+import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
 import { SessionNewProducts } from "@/features/products/components/session-new-products";
+import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
-import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
-import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
-import { Footer } from "@/components/footer";
 
 interface CatalogPageProps {
   params: Promise<{ lang: string }>;
@@ -42,7 +42,7 @@ export default async function CatalogPage({ params }: CatalogPageProps) {
         {/* Sessão de Produtos Recomendados */}
         <SessionRecommendedProducts />
       </div>
-      <Footer />
+      <Footer lang={lang} />
     </div>
   );
 }

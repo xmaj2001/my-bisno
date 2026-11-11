@@ -13,16 +13,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
 
 export default async function DashboardLayout({
   children,
   params,
 }: LayoutProps<"/[lang]/system">) {
   const { lang } = await params;
+  const dict = await getDictionary(lang as Locale);
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar lang={lang} translations={dict.dashboard.sidebar} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 px-4">
           <div className="flex items-center gap-2">
@@ -34,13 +37,15 @@ export default async function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href={`/${lang}/dashboard`}>
-                    Painel
+                  <BreadcrumbLink href={`/${lang}/system/stocks`}>
+                    {dict.dashboard.sidebar.dashboardLabel}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Visão Geral</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    {dict.dashboard.sidebar.stock}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

@@ -1,14 +1,14 @@
+import { Footer } from "@/components/footer";
+import { Commission, NoHassle } from "@/components/landing/Benefits";
+import { Faq, FinalCta } from "@/components/landing/Closing";
+import { Flow } from "@/components/landing/Flow";
+import { Hero } from "@/components/landing/Hero";
+import { Stats } from "@/components/landing/Stats";
+import { Steps } from "@/components/landing/Steps";
+import { Nav } from "@/components/Nav";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/seo";
-import { Hero } from "@/components/landing/Hero";
-import { NoHassle, Commission } from "@/components/landing/Benefits";
-import { Faq, FinalCta } from "@/components/landing/Closing";
-import { Flow } from "@/components/landing/Flow";
-import { Steps } from "@/components/landing/Steps";
-import { Stats } from "@/components/landing/Stats";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/footer";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -32,8 +32,8 @@ export default async function HomePage({ params }: PageProps) {
   const dict = await getDictionary(lang as Locale);
 
   return (
-   <div className="min-h-screen bg-black text-foreground">
-      <Nav />
+    <div className="min-h-screen bg-black text-foreground">
+      <Nav lang={lang} />
       <main>
         <Hero />
         {/* <Catalog /> */}
@@ -43,9 +43,9 @@ export default async function HomePage({ params }: PageProps) {
         <Commission />
         <Stats />
         <Faq />
-        <FinalCta />
+        <FinalCta lang={lang} />
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </div>
   );
 }

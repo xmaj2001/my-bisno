@@ -3,15 +3,15 @@ export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ProductList, ProductSearchFilters } from "@/features/products";
-import { isValidLocale, type Locale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/seo";
 import { Footer } from "@/components/footer";
+import { ProductNavbar } from "@/components/product-navbar";
+import { ProductList, ProductSearchFilters } from "@/features/products";
 import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
 import { SessionNewProducts } from "@/features/products/components/session-new-products";
 import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
-import { ProductNavbar } from "@/components/product-navbar";
+import { isValidLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { constructMetadata } from "@/lib/seo";
 
 interface ProductsPageProps {
   params: Promise<{ lang: string }>;
@@ -83,7 +83,7 @@ export default async function ProductsPage({
         )}
         <ProductList params={resolvedSearchParams} />
       </div>
-      <Footer />
+      <Footer lang={lang} />
     </main>
   );
 }

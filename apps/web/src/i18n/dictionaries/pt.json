@@ -70,5 +70,110 @@
     "showingResults": "A mostrar resultados para",
     "noResults": "Nenhum produto encontrado.",
     "tryAdjusting": "Tenta ajustar a tua pesquisa ou filtros para encontrar o que procuras."
+  },
+  "stockDetails": {
+    "downloadImage": "Descarregar imagem",
+    "imageDownloaded": "Imagem descarregada.",
+    "imageDownloadError": "Não foi possível descarregar esta imagem. Tenta novamente mais tarde.",
+    "productTab": "Produto",
+    "shareTab": "Partilha",
+    "analyticsTab": "Análise",
+    "price": "Preço",
+    "commission": "Comissão",
+    "earning": "Ganho por venda",
+    "stock": "Unidades em stock",
+    "specifications": "Especificações",
+    "shareTitle": "Partilha este produto",
+    "shareDescription": "Personaliza a mensagem e copia-a com o teu link de WhatsApp para publicar nas tuas redes.",
+    "messageLabel": "Mensagem de divulgação",
+    "defaultShareText": "Estou a recomendar este produto: {product}. Fala connosco pelo WhatsApp para saber mais.",
+    "productLinkLabel": "Link do produto com o teu cupão",
+    "whatsappMessage": "Olá! Tenho interesse no produto {product} e gostaria de saber mais detalhes.\n{link}",
+    "copyMessage": "Copiar mensagem e link",
+    "copyWhatsappLink": "Copiar link do WhatsApp",
+    "showQr": "Mostrar QR code",
+    "openWhatsapp": "Abrir WhatsApp Web",
+    "shareCopied": "Mensagem e link copiados.",
+    "linkCopied": "Link do WhatsApp copiado.",
+    "copyError": "Não foi possível copiar. Verifica as permissões do navegador e tenta novamente.",
+    "qrTitle": "QR code de divulgação",
+    "qrDescription": "Ao ler este código, o cliente abre o WhatsApp com a mensagem e o link do produto.",
+    "close": "Fechar",
+    "analyticsTitle": "Resumo da divulgação",
+    "analyticsDescription": "Indicadores de exemplo para acompanhar os resultados do produto.",
+    "demoData": "Dados de demonstração",
+    "analytics": {
+      "clicks": "Cliques no link",
+      "conversations": "Conversas iniciadas",
+      "sales": "Vendas"
+    },
+    "estimatedEarnings": "Comissões estimadas",
+    "analyticsNote": "Os dados apresentados são apenas ilustrativos."
+  },
+  "auth": {
+    "home": "Voltar ao início",
+    "panelEyebrow": "Programa de afiliados Bisno",
+    "panelTitle": "A tua divulgação pode começar hoje.",
+    "panelDescription": "Escolhe produtos do catálogo, partilha o teu cupão e recebe comissão pelas vendas concluídas pela loja.",
+    "steps": [
+      "Escolhe produtos no catálogo",
+      "Partilha o teu link e cupão",
+      "Acompanha as tuas comissões"
+    ],
+    "login": {
+      "title": "Bem-vindo de volta",
+      "description": "Entra na tua conta para gerir os produtos que divulgas e acompanhar as tuas comissões.",
+      "email": "E-mail",
+      "emailPlaceholder": "nome@exemplo.com",
+      "password": "Palavra-passe",
+      "forgotPassword": "Esqueceste-te da palavra-passe?",
+      "submit": "Entrar na Bisno",
+      "noAccount": "Ainda não tens conta?",
+      "createAccount": "Criar conta de afiliado"
+    },
+    "register": {
+      "title": "Cria a tua conta de afiliado",
+      "description": "Regista-te para descobrir produtos, partilhar recomendações e acompanhar as tuas comissões.",
+      "fullName": "Nome completo",
+      "fullNamePlaceholder": "O teu nome e apelido",
+      "email": "E-mail",
+      "emailPlaceholder": "nome@exemplo.com",
+      "password": "Palavra-passe",
+      "confirmPassword": "Confirmar palavra-passe",
+      "gender": "Género",
+      "genderPlaceholder": "Seleciona uma opção",
+      "genderOptions": {
+        "female": "Feminino",
+        "male": "Masculino",
+        "other": "Outro",
+        "preferNotToSay": "Prefiro não dizer"
+      },
+      "birthDate": "Data de nascimento",
+      "submit": "Criar conta",
+      "haveAccount": "Já tens uma conta?",
+      "login": "Entrar"
+    },
+    "passwordMismatch": "As palavras-passe não coincidem.",
+    "submitUnavailable": "A autenticação ainda não está ligada ao servidor. Os teus dados não foram enviados."
+  },
+  "dashboard": {
+    "sidebar": {
+      "brand": "Painel Bisno",
+      "brandSubtitle": "AFILIADO",
+      "dashboardLabel": "Painel",
+      "mainGroup": "A minha atividade",
+      "expandMenu": "Expandir menu",
+      "stock": "Meu stock",
+      "catalog": "Catálogo de produtos",
+      "operationsGroup": "A preparar",
+      "orders": "Pedidos",
+      "orderTracking": "Acompanhamento de pedidos",
+      "deliveries": "Entregas",
+      "regions": "Regiões",
+      "provinceCoverage": "Produtos por província",
+      "regionCoverage": "Produtos por região",
+      "comingSoon": "Em breve",
+      "affiliateArea": "Área de afiliado"
+    }
   }
 }

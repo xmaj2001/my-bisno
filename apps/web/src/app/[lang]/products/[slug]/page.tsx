@@ -1,8 +1,9 @@
 export const dynamic = "force-dynamic";
+
 import { Footer } from "@/components/footer";
 import { ProductNavbar } from "@/components/product-navbar";
 import { ProductDetails } from "@/features/products/components/details/products-details";
-import { Locale } from "@/i18n/config";
+import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 
 type Props = {
@@ -20,7 +21,7 @@ export default async function ProductPage({ params }: Props) {
         {/* <GoBack title="Produtos" /> */}
         <ProductDetails slug={slug} />
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </div>
   );
 }

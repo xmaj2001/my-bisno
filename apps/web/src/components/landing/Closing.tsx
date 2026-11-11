@@ -2,13 +2,14 @@
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ArrowRight, Plus } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SIGNUP_URL, STORE_MESSAGE } from "./constants";
 import { Logo } from "../Logo";
+import { LogoMark } from "../logo-mark";
 import { Parallax } from "../Parallax";
 import { MaskedLines, Reveal } from "../Reveal";
+import { STORE_MESSAGE } from "./constants";
 import { SectionLabel } from "./SectionLabel";
-import { LogoMark } from "../logo-mark";
 
 const faqs = [
   {
@@ -61,7 +62,7 @@ export function Faq() {
           >
             {faqs.map((f, i) => (
               <AccordionPrimitive.Item
-                key={i}
+                key={f.q}
                 value={`f${i}`}
                 className="group border-b border-foreground/15 data-[state=open]:border-foreground"
               >
@@ -92,7 +93,7 @@ export function Faq() {
 
 const finalWords = ["Escolhe", "Copia", "Envia", "Ganha"];
 
-export function FinalCta() {
+export function FinalCta({ lang }: { lang: string }) {
   return (
     <section
       id="comecar"
@@ -147,9 +148,9 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={550}>
           <Button asChild variant="hero" size="xl" className="mt-10">
-            <a href={SIGNUP_URL}>
+            <Link href={`/${lang}/auth/register`}>
               Criar conta de afiliado <ArrowRight />
-            </a>
+            </Link>
           </Button>
         </Reveal>
       </div>

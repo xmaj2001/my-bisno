@@ -1,10 +1,12 @@
 "use client";
 
-import * as React from "react";
-
+import { ClipboardList, MapPinned, Package, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type * as React from "react";
+import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { NavMain } from "@/components/dashboard/nav-main";
-import { NavProjects } from "@/components/dashboard/nav-projects";
-import { NavSecondary } from "@/components/dashboard/nav-secondary";
+import { NavOperations } from "@/components/dashboard/nav-operations";
 import { NavUser } from "@/components/dashboard/nav-user";
 import {
   Sidebar,
@@ -15,177 +17,84 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  TerminalSquareIcon,
-  BotIcon,
-  BookOpenIcon,
-  Settings2Icon,
-  LifeBuoyIcon,
-  SendIcon,
-  FrameIcon,
-  PieChartIcon,
-  MapIcon,
-  TerminalIcon,
-  Store,
-  ShoppingBag,
-  DatabaseSearch,
-} from "lucide-react";
-import { AnimatedLogo } from "../AnimatedLogo";
+import type { Dictionary } from "@/i18n/get-dictionary";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  lang: string;
+  translations: Dictionary["dashboard"]["sidebar"];
+}
+
+export function AppSidebar({ lang, translations, ...props }: AppSidebarProps) {
+  const pathname = usePathname();
+  const stockUrl = `/${lang}/system/stocks`;
+
+  const mainItems = [
     {
-      title: "Geral",
-      url: "/system",
-      icon: <DatabaseSearch />,
-      isActive: true,
+      title: translations.stock,
+      url: stockUrl,
+      icon: <Package />,
     },
     {
-      title: "Produtos",
-      url: "/system/products",
+      title: translations.catalog,
+      url: `/${lang}/products`,
       icon: <ShoppingBag />,
-      isActive: false,
-      items: [
-        {
-          title: "Recomendados",
-          url: "/products/recommended",
-        },
-        {
-          title: "Populares",
-          url: "#",
-        },
-        {
-          title: "Mais vendidos",
-          url: "#",
-        },
-      ],
     },
-    {
-      title: "Stocks",
-      url: "/system/stocks",
-      icon: <Store />,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: <BookOpenIcon />,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: <Settings2Icon />,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: <LifeBuoyIcon />,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: <SendIcon />,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: <FrameIcon />,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: <PieChartIcon />,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: <MapIcon />,
-    },
-  ],
-};
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  ].map((item) => ({
+    ...item,
+    isActive: pathname === item.url || pathname.startsWith(`${item.url}/`),
+  }));
+
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<a href="#" />}>
+            <SidebarMenuButton
+              size="lg"
+              tooltip={translations.brand}
+              render={<Link href={stockUrl} aria-label={translations.brand} />}
+            >
               <div className="flex size-8 items-center justify-center rounded-sm bg-sidebar-primary text-sidebar-primary-foreground">
-                <AnimatedLogo className="" />
+                <AnimatedLogo />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">BISNO</span>
-                <span className="truncate text-xs">AFILIADO</span>
+                <span className="truncate text-xs">
+                  {translations.brandSubtitle}
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain
+          items={mainItems}
+          label={translations.mainGroup}
+          toggleLabel={translations.expandMenu}
+        />
+        <NavOperations
+          items={[
+            {
+              title: translations.orders,
+              icon: <ClipboardList />,
+              children: [translations.orderTracking, translations.deliveries],
+            },
+            {
+              title: translations.regions,
+              icon: <MapPinned />,
+              children: [
+                translations.provinceCoverage,
+                translations.regionCoverage,
+              ],
+            },
+          ]}
+          label={translations.operationsGroup}
+          unavailableLabel={translations.comingSoon}
+        />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser label={translations.affiliateArea} />
       </SidebarFooter>
     </Sidebar>
   );

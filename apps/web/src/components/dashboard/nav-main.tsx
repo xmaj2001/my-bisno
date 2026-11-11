@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
+import { ChevronRightIcon } from "lucide-react";
+import Link from "next/link";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -15,26 +17,31 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
-import { ChevronRightIcon } from "lucide-react"
+} from "@/components/ui/sidebar";
 
 export function NavMain({
   items,
+  label,
+  toggleLabel,
 }: {
   items: {
-    title: string
-    url: string
-    icon: React.ReactNode
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: React.ReactNode;
+    isActive?: boolean;
+    disabled?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+      disabled?: boolean;
+    }[];
+  }[];
+  label: string;
+  toggleLabel: string;
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -44,7 +51,9 @@ export function NavMain({
           >
             <SidebarMenuButton
               tooltip={item.title}
-              render={<a href={item.url} />}
+              isActive={item.isActive}
+              disabled={item.disabled}
+              render={item.disabled ? undefined : <Link href={item.url} />}
             >
               {item.icon}
               <span>{item.title}</span>
@@ -56,15 +65,26 @@ export function NavMain({
                     <SidebarMenuAction className="aria-expanded:rotate-90" />
                   }
                 >
-                  <ChevronRightIcon
-                  />
-                  <span className="sr-only">Toggle</span>
+                  <ChevronRightIcon />
+                  <span className="sr-only">{toggleLabel}</span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton render={<a href={subItem.url} />}>
+                        <SidebarMenuSubButton
+                          aria-disabled={subItem.disabled || undefined}
+                          className={
+                            subItem.disabled
+                              ? "pointer-events-none opacity-50"
+                              : undefined
+                          }
+                          render={
+                            subItem.disabled ? undefined : (
+                              <Link href={subItem.url} />
+                            )
+                          }
+                        >
                           <span>{subItem.title}</span>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
@@ -77,5 +97,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

@@ -1,31 +1,33 @@
-"use client"
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { AuthShell } from "@/features/auth/components/auth-shell/auth-shell";
+import { LoginForm } from "@/features/auth/components/login-form/login-form";
+import { isValidLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
 
-import { LoginForm } from "@/components/login-form"
-import { Logo } from "@/components/Logo"
-import { GalleryVerticalEndIcon } from "lucide-react"
+type Props = {
+  params: Promise<{ lang: string }>;
+};
 
-export default function LoginPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isValidLocale(lang)) return {};
+
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.auth.login.title,
+    description: dict.auth.login.description,
+  };
+}
+
+export default async function LoginPage({ params }: Props) {
+  const { lang } = await params;
+  if (!isValidLocale(lang)) notFound();
+
+  const dict = await getDictionary(lang as Locale);
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <a href="/" className="flex items-center gap-2 font-medium">
-            <Logo />
-          </a>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <LoginForm />
-          </div>
-        </div>
-      </div>
-      <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/hero-night-doorway.jpg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
-    </div>
+    <AuthShell lang={lang} translations={dict.auth}>
+      <LoginForm lang={lang} translations={dict.auth} />
+    </AuthShell>
   );
 }

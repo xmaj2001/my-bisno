@@ -1,8 +1,8 @@
-import { SIGNUP_URL } from "./landing/constants";
+import Link from "next/link";
 import { Logo } from "./Logo";
 import { Parallax } from "./Parallax";
 
-export function Footer() {
+export function Footer({ lang }: { lang: string }) {
   return (
     <footer className="theme-gold relative overflow-hidden pb-24">
       <div className="mx-auto max-w-7xl px-6 pt-16 lg:px-10">
@@ -18,9 +18,9 @@ export function Footer() {
             <a href="#perguntas" className="hover:underline">
               Perguntas
             </a>
-            <a href={SIGNUP_URL} className="hover:underline">
+            <Link href={`/${lang}/auth/register`} className="hover:underline">
               Quero ser afiliado
-            </a>
+            </Link>
           </nav>
         </div>
         <div className="flex flex-col justify-between gap-3 py-6 text-xs sm:flex-row">

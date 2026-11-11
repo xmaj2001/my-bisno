@@ -60,13 +60,13 @@ export function getMockStockId(id: string): StockDetailsResponse {
 
   const stockDetails: StockItemDetails = {
     ...found,
-    slug: "",
+    slug: `${faker.helpers.slugify(found.name).toLowerCase()}-${found.id}`,
     description: "ww",
     images: mockImages,
     category: "Eletrónicos & Utilidades",
     specs: mockSpecs,
     earning: "50",
-    coupon: "Test",
+    coupon: `BISNO-${found.id.toUpperCase()}`,
   };
 
   return {

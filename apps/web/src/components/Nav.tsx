@@ -1,8 +1,8 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LogoMark } from "./logo-mark";
@@ -16,7 +16,7 @@ const links = [
   { href: "#perguntas", label: "FAQ" },
 ];
 
-export function Nav() {
+export function Nav({ lang }: { lang: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const bar = useRef<HTMLSpanElement>(null);
@@ -104,7 +104,7 @@ export function Nav() {
                 "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white",
             )}
           >
-            <Link href="/auth/login">
+            <Link href={`/${lang}/auth/login`}>
               Entrar <span aria-hidden>→</span>
             </Link>
           </Button>
@@ -154,7 +154,7 @@ export function Nav() {
               size="lg"
               className="mt-6 w-full rounded-full"
             >
-              <Link href="/auth/login" onClick={() => setOpen(false)}>
+              <Link href={`/${lang}/auth/login`} onClick={() => setOpen(false)}>
                 Entrar →
               </Link>
             </Button>

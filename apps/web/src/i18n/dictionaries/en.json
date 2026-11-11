@@ -70,5 +70,110 @@
     "showingResults": "Showing results for",
     "noResults": "No products found.",
     "tryAdjusting": "Try adjusting your search or filters to find what you are looking for."
+  },
+  "stockDetails": {
+    "downloadImage": "Download image",
+    "imageDownloaded": "Image downloaded.",
+    "imageDownloadError": "Could not download this image. Try again later.",
+    "productTab": "Product",
+    "shareTab": "Share",
+    "analyticsTab": "Analytics",
+    "price": "Price",
+    "commission": "Commission",
+    "earning": "Earnings per sale",
+    "stock": "Units in stock",
+    "specifications": "Specifications",
+    "shareTitle": "Share this product",
+    "shareDescription": "Customize the message and copy it with your WhatsApp link to post on your social networks.",
+    "messageLabel": "Promotional message",
+    "defaultShareText": "I recommend this product: {product}. Contact us on WhatsApp to learn more.",
+    "productLinkLabel": "Product link with your coupon",
+    "whatsappMessage": "Hello! I'm interested in the product {product} and would like to know more.\n{link}",
+    "copyMessage": "Copy message and link",
+    "copyWhatsappLink": "Copy WhatsApp link",
+    "showQr": "Show QR code",
+    "openWhatsapp": "Open WhatsApp Web",
+    "shareCopied": "Message and link copied.",
+    "linkCopied": "WhatsApp link copied.",
+    "copyError": "Could not copy. Check your browser permissions and try again.",
+    "qrTitle": "Promotional QR code",
+    "qrDescription": "Scanning this code opens WhatsApp with the message and product link.",
+    "close": "Close",
+    "analyticsTitle": "Promotion summary",
+    "analyticsDescription": "Sample indicators to track this product's results.",
+    "demoData": "Demo data",
+    "analytics": {
+      "clicks": "Link clicks",
+      "conversations": "Conversations started",
+      "sales": "Sales"
+    },
+    "estimatedEarnings": "Estimated commissions",
+    "analyticsNote": "The data shown is for illustration only."
+  },
+  "auth": {
+    "home": "Back to home",
+    "panelEyebrow": "Bisno affiliate program",
+    "panelTitle": "Start sharing products today.",
+    "panelDescription": "Choose products from the catalog, share your coupon, and earn commission on sales completed by the store.",
+    "steps": [
+      "Choose products from the catalog",
+      "Share your link and coupon",
+      "Track your commissions"
+    ],
+    "login": {
+      "title": "Welcome back",
+      "description": "Sign in to manage the products you promote and track your commissions.",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "forgotPassword": "Forgot your password?",
+      "submit": "Sign in to Bisno",
+      "noAccount": "Don't have an account yet?",
+      "createAccount": "Create an affiliate account"
+    },
+    "register": {
+      "title": "Create your affiliate account",
+      "description": "Sign up to discover products, share recommendations, and track your commissions.",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Your first and last name",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "gender": "Gender",
+      "genderPlaceholder": "Choose an option",
+      "genderOptions": {
+        "female": "Female",
+        "male": "Male",
+        "other": "Other",
+        "preferNotToSay": "Prefer not to say"
+      },
+      "birthDate": "Date of birth",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "login": "Sign in"
+    },
+    "passwordMismatch": "Passwords do not match.",
+    "submitUnavailable": "Authentication is not connected to the server yet. Your information was not sent."
+  },
+  "dashboard": {
+    "sidebar": {
+      "brand": "Bisno dashboard",
+      "brandSubtitle": "AFFILIATE",
+      "dashboardLabel": "Dashboard",
+      "mainGroup": "My activity",
+      "expandMenu": "Expand menu",
+      "stock": "My stock",
+      "catalog": "Product catalog",
+      "operationsGroup": "Coming next",
+      "orders": "Orders",
+      "orderTracking": "Order tracking",
+      "deliveries": "Deliveries",
+      "regions": "Regions",
+      "provinceCoverage": "Products by province",
+      "regionCoverage": "Products by region",
+      "comingSoon": "Coming soon",
+      "affiliateArea": "Affiliate area"
+    }
   }
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { StockItem } from "../types";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import type { StockItem } from "../types";
 
 interface StockItemGridProps {
   item: StockItem;
@@ -13,9 +14,11 @@ interface StockItemGridProps {
  * Componente individual para renderizar cada card de stock na grelha
  */
 export function StockItemGrid({ item }: StockItemGridProps) {
+  const lang = usePathname().split("/")[1];
+
   return (
     <Link
-      href={`/system/stocks/${item.id}`}
+      href={`/${lang}/system/stocks/${item.id}`}
       className="group flex flex-col overflow-hidden rounded-xs border bg-background p-4 transition-all hover:shadow-md"
     >
       <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-secondary mb-3">

@@ -1,14 +1,18 @@
-import { ProductDetailsGallery } from "@/features/products";
 import { Suspense } from "react";
+import { env } from "@/env";
+import { ProductDetailsGallery } from "@/features/products";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/get-dictionary";
 import { getStockById } from "../../queries";
-import { Tabs } from "@/components/ui/tabs";
 import { StockDetailsTabs } from "./stock-details-tabs";
 
 interface StockDetailsProps {
   id: string;
+  lang: Locale;
+  translations: Dictionary["stockDetails"];
 }
 
-export const StockDetails = async ({ id }: StockDetailsProps) => {
+export const StockDetails = async (props: StockDetailsProps) => {
   return (
     <Suspense
       fallback={
@@ -18,28 +22,51 @@ export const StockDetails = async ({ id }: StockDetailsProps) => {
         </div>
       }
     >
-      <StockDetailsContent id={id} />
+      <StockDetailsContent {...props} />
     </Suspense>
   );
 };
 
-export const StockDetailsContent = async ({ id }: StockDetailsProps) => {
+export const StockDetailsContent = async ({
+  id,
+  lang,
+  translations,
+}: StockDetailsProps) => {
   const res = await getStockById(id);
   const p = res.data;
 
-  const earningPerSale = Number(p.earning);
+  const slug =
+    p.slug || `${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${p.id}`;
+  const productUrl = new URL(
+    `/${lang}/products/${encodeURIComponent(slug)}`,
+    env.NEXT_PUBLIC_APP_URL,
+  );
+  if (p.coupon) productUrl.searchParams.set("coupon", p.coupon);
+  const whatsappMessage = translations.whatsappMessage
+    .replace("{product}", p.name)
+    .replace("{link}", productUrl.toString());
+  const whatsappLink = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       {/* Lado Esquerdo: Galeria de Imagens */}
       <ProductDetailsGallery
         gallery={p.images}
         productName={p.name}
-        downloadImage={true}
+        downloadImage
+        downloadImageLabel={translations.downloadImage}
+        downloadImageSuccess={translations.imageDownloaded}
+        downloadImageError={translations.imageDownloadError}
       />
 
       {/* Lado Direito: Informações e Ações do Produto */}
       <div className="flex flex-col gap-6 rounded-md bg-card shadow-sm">
-        <StockDetailsTabs />
+        <StockDetailsTabs
+          product={p}
+          productUrl={productUrl.toString()}
+          whatsappLink={whatsappLink}
+          translations={translations}
+        />
       </div>
     </div>
   );
