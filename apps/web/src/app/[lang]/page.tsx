@@ -8,7 +8,11 @@ import { Steps } from "@/components/landing/Steps";
 import { Nav } from "@/components/Nav";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/seo";
+import {
+  constructMetadata,
+  createWebsiteJsonLd,
+  getBaseUrl,
+} from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -23,16 +27,38 @@ export async function generateMetadata({ params }: PageProps) {
     title: dict.seo.homeTitle,
     description: dict.seo.homeDescription,
     lang: lang as Locale,
+    path: "/",
+    image: "/landing/stats.jpeg",
   });
 }
 
 export default async function HomePage({ params }: PageProps) {
   const { lang } = await params;
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
   const dict = await getDictionary(lang as Locale);
+  const baseUrl = getBaseUrl();
+
+  const websiteJsonLd = createWebsiteJsonLd(lang as Locale);
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Bisno",
+    url: `${baseUrl}/${lang}`,
+    logo: `${baseUrl}/logo.png`,
+    description: dict.seo.homeDescription,
+  };
 
   return (
     <div className="min-h-screen bg-black text-foreground">
+      {/* Dados Estruturados JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+
       <Nav lang={lang} />
       <main>
         <Hero />

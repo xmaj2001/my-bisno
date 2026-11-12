@@ -26,10 +26,6 @@
     "backHome": "Voltar à página inicial",
     "digest": "Código de diagnóstico:"
   },
-  "loading": {
-    "title": "A preparar a página...",
-    "subtitle": "A carregar os recursos e componentes mais recentes."
-  },
   "notFound": {
     "code": "404",
     "title": "Página não encontrada",
@@ -37,6 +33,10 @@
     "backHome": "Voltar à página inicial",
     "button": "Voltar à página inicial",
     "goBack": "Voltar atrás"
+  },
+  "loading": {
+    "title": "A preparar a página...",
+    "subtitle": "A carregar os recursos e componentes mais recentes."
   },
   "products": {
     "title": "Produtos em Destaque",

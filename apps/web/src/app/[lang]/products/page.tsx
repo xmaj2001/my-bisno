@@ -11,7 +11,11 @@ import { SessionNewProducts } from "@/features/products/components/session-new-p
 import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/seo";
+import {
+  constructMetadata,
+  createBreadcrumbJsonLd,
+  getBaseUrl,
+} from "@/lib/seo";
 
 interface ProductsPageProps {
   params: Promise<{ lang: string }>;
@@ -36,6 +40,7 @@ export async function generateMetadata({
     description: dict.productsPage.description,
     lang: lang as Locale,
     path: "/products",
+    image: "/landing/stats.jpeg",
   });
 }
 
@@ -48,9 +53,34 @@ export default async function ProductsPage({
 
   const dict = await getDictionary(lang as Locale);
   const resolvedSearchParams = await searchParams;
+  const baseUrl = getBaseUrl();
+  const canonicalUrl = `${baseUrl}/${lang}/products`;
+
+  const breadcrumbJsonLd = createBreadcrumbJsonLd([
+    { name: "Bisno", url: `${baseUrl}/${lang}` },
+    { name: dict.productsPage.title, url: canonicalUrl },
+  ]);
+
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: dict.productsPage.title,
+    description: dict.productsPage.description,
+    url: canonicalUrl,
+  };
 
   return (
     <main className="min-h-screen bg-background">
+      {/* Dados Estruturados JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+
       <ProductNavbar lang={lang} />
       {/* Sessão de Produtos em Destaque */}
       <SessionFeaturedProducts />
