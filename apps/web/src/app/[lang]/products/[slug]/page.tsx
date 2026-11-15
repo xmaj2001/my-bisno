@@ -41,8 +41,7 @@ export async function generateMetadata({
     const dict = await getDictionary(lang as Locale);
     const priceFormatted = product.price ? ` — ${product.price}` : "";
     const title = `${product.name}${priceFormatted}`;
-    const description =
-      product.description || dict.productsPage.description;
+    const description = product.description || dict.productsPage.description;
 
     return constructMetadata({
       title,
@@ -52,7 +51,7 @@ export async function generateMetadata({
       image:
         product.images && product.images.length > 0
           ? product.images
-          : [product.image].filter(Boolean),
+          : [].filter(Boolean),
       type: "article",
     });
   } catch {
@@ -93,7 +92,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     images:
       product.images && product.images.length > 0
         ? product.images
-        : [product.image].filter(Boolean),
+        : [].filter(Boolean),
     price: product.price,
     currency: "AOA",
     category: product.category,

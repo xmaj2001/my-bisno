@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const productsRes = await getProducts({ limit: "50" });
-    const products = productsRes?.data?.data ?? [];
+    const products = productsRes?.data?.items ?? [];
 
     const productEntries: MetadataRoute.Sitemap = products.flatMap((product) => {
       const productPath = `/products/${product.slug}`;
