@@ -15,7 +15,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <Link
-      href={`/products/${p.slug}`}
+      href={`/system/product/${p.slug}`}
       className="group relative flex h-full w-full min-w-0 flex-col overflow-hidden rounded-md border bg-card transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft"
     >
       {/* Wrapper com proporção fixa: é ele que define o tamanho */}

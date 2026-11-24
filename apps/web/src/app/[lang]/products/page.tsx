@@ -87,7 +87,7 @@ export default async function ProductsPage({
       {/* Sessão de Novos Produtos */}
       <SessionNewProducts />
       {/* Sessão de Produtos Recomendados */}
-      <SessionRecommendedProducts />
+      {/* <SessionRecommendedProducts /> */}
       <div className="flex flex-col gap-4 w-full"></div>
       <div className="mx-auto max-w-7xl px-4 pt-28 sm:px-6 lg:px-8">
         <header className="animate-fade-up text-center sm:text-left">

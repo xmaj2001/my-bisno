@@ -1,10 +1,11 @@
 "use client";
 
-// import { StockToggleButton } from "@/features/affiliates/components/stock-toggle-button/stock-toggle-button";
-// import { authClient } from "@/features/auth/auth";
+import { authClient } from "@/features/auth/auth-client";
+// import { authClient } from "@/features/auth/auth-client";
 import { ProductStockAction } from "./product-stock-action";
 
-interface ProductStockActionProps {
+interface ProductActionProps {
+  productId: string;
   productSlug: string;
   lang?: string;
   initialInStock?: boolean;
@@ -12,20 +13,22 @@ interface ProductStockActionProps {
 }
 
 export const ProductAction = ({
+  productId,
   productSlug,
   lang = "pt",
   initialInStock = false,
   initialCoupon = null,
-}: ProductStockActionProps) => {
-  // const { data } = authClient.useSession();
-  const isLoggedIn = false;
+}: ProductActionProps) => {
+  const { data } = authClient.useSession();
+  const isLoggedIn = data?.session ? true : false; // TODO: ligar ao authClient.useSession() quando pronto
   return (
-    <div>
-      <ProductStockAction
-        isLoggedIn={isLoggedIn}
-        productSlug={productSlug}
-        initialInStock={initialInStock}
-      />
-    </div>
+    <ProductStockAction
+      isLoggedIn={isLoggedIn}
+      productId={productId}
+      productSlug={productSlug}
+      lang={lang}
+      initialInStock={initialInStock}
+      initialCoupon={initialCoupon}
+    />
   );
 };

@@ -3,11 +3,11 @@ import { env } from "@/env";
 import { ProductDetailsGallery } from "@/features/products";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { getStockById } from "../../queries";
+import { getStockBySlug } from "../../queries";
 import { StockDetailsTabs } from "./stock-details-tabs";
 
 interface StockDetailsProps {
-  id: string;
+  slug: string;
   lang: Locale;
   translations: Dictionary["stockDetails"];
 }
@@ -28,24 +28,22 @@ export const StockDetails = async (props: StockDetailsProps) => {
 };
 
 export const StockDetailsContent = async ({
-  id,
+  slug,
   lang,
   translations,
 }: StockDetailsProps) => {
-  const res = await getStockById(id);
+  const res = await getStockBySlug(slug);
   const p = res.data;
 
-  const slug =
-    p.slug || `${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${p.id}`;
   const productUrl = new URL(
-    `/${lang}/products/${encodeURIComponent(slug)}`,
+    `/${lang}/products/${encodeURIComponent(p.slug)}`,
     env.NEXT_PUBLIC_APP_URL,
   );
   if (p.coupon) productUrl.searchParams.set("coupon", p.coupon);
   const whatsappMessage = translations.whatsappMessage
     .replace("{product}", p.name)
     .replace("{link}", productUrl.toString());
-  const whatsappLink = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappLink = `https://wa.me/${p.store.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">

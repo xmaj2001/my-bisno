@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { AuthShell } from "@/features/auth/components/auth-shell/auth-shell";
-import { RegisterForm } from "@/features/auth/components/register-form/register-form";
+import { AuthShell } from "@/features/auth/components/auth-shell";
+import { RegisterForm } from "@/features/auth/components/register-form";
 import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 

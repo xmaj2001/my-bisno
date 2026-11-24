@@ -1,6 +1,15 @@
+import "server-only";
+
 import { cache } from "react";
 import { env } from "@/env";
-import { apiFetch } from "@/lib/api/api-fetch";
+import { prisma } from "@/lib/prisma";
+import { getSessionUserId } from "@/features/auth/auth";
+import type { Prisma } from "@/generated/prisma/client";
+import {
+  computeEarning,
+  mapFeaturedProduct,
+  mapPrismaProduct,
+} from "./helper";
 import {
   getMockFeaturedProducts,
   getMockNewProducts,
@@ -9,6 +18,7 @@ import {
   getMockSearchProducts,
 } from "./mocks/products.mock";
 import type {
+  APIProductDetails,
   FeaturedProductsResponse,
   GetProductsParams,
   NewProductsResponse,
@@ -19,12 +29,27 @@ import type {
 
 // ─── Produtos novos ───────────────────────────────────────────────────────────
 
-export const getNewProducts = cache(async (): Promise<NewProductsResponse> => {
-  if (env.USE_MOCKS) {
-    return getMockNewProducts();
-  }
-  return apiFetch("/products/new");
-});
+export const getNewProducts = cache(
+  async (limit = 10): Promise<NewProductsResponse> => {
+    if (env.USE_MOCKS) {
+      return getMockNewProducts();
+    }
+
+    const products = await prisma.product.findMany({
+      take: limit,
+      include: {
+        specs: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return {
+      success: true,
+      data: products.map(mapPrismaProduct),
+      ts: new Date().toISOString(),
+    };
+  },
+);
 
 // ─── Produtos recomendados ────────────────────────────────────────────────────
 
@@ -33,7 +58,20 @@ export const getRecommendedProducts = cache(
     if (env.USE_MOCKS) {
       return getMockNewProducts();
     }
-    return apiFetch("/products/recommended");
+
+    const products = await prisma.product.findMany({
+      take: 10,
+      include: {
+        specs: true,
+      },
+      orderBy: { rating: "desc" },
+    });
+
+    return {
+      success: true,
+      data: products.map(mapPrismaProduct),
+      ts: new Date().toISOString(),
+    };
   },
 );
 
@@ -45,41 +83,105 @@ export const getProducts = cache(
       return getMockPaginatedProducts(params);
     }
 
-    const qs = new URLSearchParams();
-    if (params.cursor) qs.set("cursor", params.cursor);
-    if (params.cursorPublishedAt)
-      qs.set("cursorPublishedAt", params.cursorPublishedAt);
-    if (params.limit) qs.set("limit", params.limit);
-    if (params.categoryId) qs.set("categoryId", params.categoryId);
-    if (params.storeId) qs.set("storeId", params.storeId);
-    if (params.q) qs.set("q", params.q);
-    const query = qs.toString();
-    return apiFetch(`/products${query ? `?${query}` : ""}`);
+    const { cursor, limit = "24", categoryId, storeId, q } = params;
+    const limitNum = Number.parseInt(limit, 10) || 24;
+    const take = limitNum + 1;
+
+    const whereClause: Prisma.ProductWhereInput = {};
+    if (categoryId) whereClause.categoryId = categoryId;
+    if (storeId) whereClause.storeId = storeId;
+    if (q) {
+      whereClause.OR = [
+        { name: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
+      ];
+    }
+
+    const products = await prisma.product.findMany({
+      take,
+      ...(cursor && {
+        skip: 1,
+        cursor: { id: cursor },
+      }),
+      where: whereClause,
+      include: {
+        specs: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    let nextCursor: string | null = null;
+    if (products.length > limitNum) {
+      const nextItem = products.pop();
+      nextCursor = nextItem?.id ?? null;
+    }
+
+    return {
+      success: true,
+      data: {
+        items: products.map(mapPrismaProduct),
+        nextCursor,
+      },
+      ts: new Date().toISOString(),
+    };
   },
 );
 
 // ─── Produtos em destaque ─────────────────────────────────────────────────────
 
 export const getFeaturedProducts = cache(
-  async (): Promise<FeaturedProductsResponse> => {
+  async (limit = 4): Promise<FeaturedProductsResponse> => {
     if (env.USE_MOCKS) {
       return getMockFeaturedProducts();
     }
-    return apiFetch("/products/featured");
+
+    const featuredRecords = await prisma.featuredProduct.findMany({
+      take: limit,
+      include: {
+        product: {
+          include: {
+            specs: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return {
+      success: true,
+      data: featuredRecords.map(mapFeaturedProduct),
+      ts: new Date().toISOString(),
+    };
   },
 );
 
 // ─── Pesquisa ─────────────────────────────────────────────────────────────────
 
 export const searchProducts = cache(
-  async (query: string, limit?: number): Promise<ProductSearchResponse> => {
+  async (query: string, limit = 8): Promise<ProductSearchResponse> => {
     if (env.USE_MOCKS) {
       return getMockSearchProducts(query, limit);
     }
 
-    const qs = new URLSearchParams({ q: query });
-    if (limit) qs.set("limit", String(limit));
-    return apiFetch(`/products/search?${qs.toString()}`);
+    const products = await prisma.product.findMany({
+      take: limit,
+      where: {
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
+        ],
+      },
+      include: {
+        specs: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return {
+      success: true,
+      data: products.map(mapPrismaProduct),
+      ts: new Date().toISOString(),
+    };
   },
 );
 
@@ -90,6 +192,52 @@ export const getProductBySlug = cache(
     if (env.USE_MOCKS) {
       return getMockProductBySlug(slug);
     }
-    return apiFetch(`/products/${slug}`);
+
+    const decodedSlug = decodeURIComponent(slug);
+    const userId = await getSessionUserId();
+    const product = await prisma.product.findFirst({
+      where: {
+        OR: [{ slug }, { slug: decodedSlug }],
+      },
+      include: {
+        category: true,
+        specs: true,
+        stockAfiliates: userId
+          ? { where: { userId }, select: { coupon: true, isActive: true } }
+          : false,
+      },
+    });
+
+    if (!product) {
+      throw new Error(`Product not found: ${slug}`);
+    }
+
+    const affiliateRecord =
+      userId && product.stockAfiliates && product.stockAfiliates.length > 0
+        ? product.stockAfiliates[0]
+        : null;
+
+    const productDetails: APIProductDetails = {
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      commission: product.commission,
+      earning: computeEarning(product.price, product.commission),
+      image: product.images[0] ?? "",
+      images: product.images,
+      category: product.category?.name ?? "",
+      specs: product.specs.map((s) => ({ label: s.label, value: s.value })),
+      affiliateInfo: affiliateRecord
+        ? { coupon: affiliateRecord.coupon, isActive: affiliateRecord.isActive }
+        : null,
+    };
+
+    return {
+      success: true,
+      data: productDetails,
+      ts: new Date().toISOString(),
+    };
   },
 );

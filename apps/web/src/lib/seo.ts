@@ -62,32 +62,34 @@ export function constructMetadata({
     "A plataforma angolana de afiliados, conectando afiliados, clientes e lojas com envio rápido e comissões garantidas.";
 
   // Normalização de imagens para URLs absolutas
-  const rawImages = image
-    ? Array.isArray(image)
-      ? image
-      : [image]
-    : ["/logo.png"];
+  const rawImages =
+    image && (!Array.isArray(image) || image.length > 0)
+      ? Array.isArray(image)
+        ? image
+        : [image]
+      : ["/logo.png"];
 
   const ogImages = rawImages.map((img) => {
-    if (typeof img === "string") {
-      return {
-        url: resolveAbsoluteUrl(img, baseUrl),
-        width: 1200,
-        height: 630,
-        alt: title || "Bisno",
-      };
-    }
+    const isString = typeof img === "string";
+    const url = isString
+      ? resolveAbsoluteUrl(img, baseUrl)
+      : resolveAbsoluteUrl(img.url, baseUrl);
+    const isHttps = url.startsWith("https://");
+
     return {
-      url: resolveAbsoluteUrl(img.url, baseUrl),
-      width: img.width ?? 1200,
-      height: img.height ?? 630,
-      alt: img.alt ?? title ?? "Bisno",
+      url,
+      secureUrl: isHttps ? url : undefined,
+      width: isString ? 1200 : (img.width ?? 1200),
+      height: isString ? 630 : (img.height ?? 630),
+      alt: (isString ? title : img.alt) || title || "Bisno",
+      type: "image/jpeg",
     };
   });
 
   const twitterImages = ogImages.map((img) => img.url);
 
   return {
+    metadataBase: new URL(baseUrl),
     title: finalTitle,
     description: finalDescription,
     keywords,
@@ -160,11 +162,26 @@ export function createProductJsonLd({
   const rawImages = images && images.length > 0 ? images : ["/logo.png"];
   const formattedImages = rawImages.map((img) => resolveAbsoluteUrl(img, baseUrl));
 
-  // Extrair valor numérico do preço formatado (ex.: "150.00 Kz" -> 150.00)
-  const numericPrice =
-    typeof price === "number"
-      ? price
-      : Number.parseFloat(String(price || "").replace(/[^0-9.]/g, "")) || 0;
+  // Extrair valor numérico do preço formatado (ex.: "150.000 Kz" -> 150000)
+  const cleaned = String(price || "").replace(/[^\d,\.]/g, "");
+  let numericPrice = 0;
+  if (typeof price === "number") {
+    numericPrice = price;
+  } else if (cleaned.includes(",") && cleaned.includes(".")) {
+    numericPrice =
+      Number.parseFloat(cleaned.replace(/\./g, "").replace(",", ".")) || 0;
+  } else if (cleaned.includes(",")) {
+    numericPrice = Number.parseFloat(cleaned.replace(",", ".")) || 0;
+  } else if (cleaned.includes(".")) {
+    const parts = cleaned.split(".");
+    if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+      numericPrice = Number.parseFloat(cleaned.replace(/\./g, "")) || 0;
+    } else {
+      numericPrice = Number.parseFloat(cleaned) || 0;
+    }
+  } else {
+    numericPrice = Number.parseFloat(cleaned) || 0;
+  }
 
   return {
     "@context": "https://schema.org",

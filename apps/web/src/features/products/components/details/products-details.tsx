@@ -37,13 +37,14 @@ export const ProductDetailsContent = async ({ slug }: ProductDetailsProps) => {
 
   const earningPerSale = Number(p.earning);
   const isInStock = p.affiliateInfo !== null;
+  console.log("affiliateInfo:", p.affiliateInfo);
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       {/* Lado Esquerdo: Galeria de Imagens */}
       <ProductDetailsGallery gallery={p.images} productName={p.name} />
 
       {/* Lado Direito: Informações e Ações do Produto */}
-      <div className="flex flex-col gap-6 rounded-lg border bg-card p-6 md:p-8 shadow-sm">
+      <div className="flex flex-col gap-6 rounded-sm p-6 md:p-8">
         {/* Categoria e Tag de Comissão */}
         <div className="flex items-center justify-between gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
@@ -134,23 +135,13 @@ export const ProductDetailsContent = async ({ slug }: ProductDetailsProps) => {
         )}
 
         {/* Ação do Estoque (Client Component com estado Auth) */}
-        <ProductAction productSlug={p.slug} initialInStock={isInStock} />
+        <ProductAction
+          productId={p.id}
+          productSlug={p.slug}
+          initialInStock={isInStock}
+          initialCoupon={p.affiliateInfo?.coupon ?? null}
+        />
 
-        {/* Garantias do Afiliado */}
-        <div className="grid gap-2.5 text-xs text-muted-foreground sm:grid-cols-2 pt-2 border-t">
-          <p className="flex items-center gap-2">
-            <Link2 className="h-4 w-4 text-primary shrink-0" /> Link exclusivo
-            de rastreamento
-          </p>
-          <p className="flex items-center gap-2">
-            <MessageCircle className="h-4 w-4 text-primary shrink-0" />{" "}
-            Divulgação direta no WhatsApp
-          </p>
-          <p className="flex items-center gap-2 sm:col-span-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-500 shrink-0" />{" "}
-            Comissão atrelada automaticamente ao seu ID
-          </p>
-        </div>
       </div>
     </div>
   );

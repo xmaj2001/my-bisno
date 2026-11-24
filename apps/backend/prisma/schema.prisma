@@ -1,0 +1,290 @@
+// Prisma schema — Better Auth + Bisno (plataforma de afiliados)
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ═══════════════════════════════════════════════════
+// USER & AFFILIATE PROFILE (Consolidado)
+// ═══════════════════════════════════════════════════
+
+model User {
+  id            String  @id @default(uuid())
+  email         String  @unique
+  name          String
+  emailVerified Boolean @default(false)
+  image         String?
+  passwordHash  String?
+
+  // Campos do plugin `admin` do Better Auth
+  role       String    @default("user")
+  banned     Boolean   @default(false)
+  banReason  String?
+  banExpires DateTime?
+
+  // Campos de Afiliado (anteriormente em AffiliateProfile)
+  whatsapp      String?   @unique
+  province      String?
+  city          String?
+  bio           String?
+  payoutHolder  String?
+  payoutAccount String?
+  approvedAt    DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // Better Auth
+  sessions          Session[]
+  accounts          Account[]
+  oauthApplications OauthApplication[]
+  oauthAccessTokens OauthAccessToken[]
+  oauthConsents     OauthConsent[]
+  stockAfiliates    StockAfiliate[]
+
+  @@map("users")
+}
+
+// ═══════════════════════════════════════════════════
+// BETTER AUTH
+// ═══════════════════════════════════════════════════
+
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  impersonatedBy String? // plugin admin
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model OauthApplication {
+  id                String             @id
+  name              String
+  icon              String?
+  metadata          String?
+  clientId          String
+  clientSecret      String?
+  redirectUrls      String
+  type              String
+  disabled          Boolean?           @default(false)
+  userId            String?
+  user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime
+  updatedAt         DateTime
+  oauthaccesstokens OauthAccessToken[]
+  oauthconsents     OauthConsent[]
+
+  @@unique([clientId])
+  @@index([userId])
+  @@map("oauthApplication")
+}
+
+model OauthAccessToken {
+  id                    String           @id
+  accessToken           String
+  refreshToken          String
+  accessTokenExpiresAt  DateTime
+  refreshTokenExpiresAt DateTime
+  clientId              String
+  oauthapplication      OauthApplication @relation(fields: [clientId], references: [clientId], onDelete: Cascade)
+  userId                String?
+  user                  User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scopes                String
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@unique([accessToken])
+  @@unique([refreshToken])
+  @@index([clientId])
+  @@index([userId])
+  @@map("oauthAccessToken")
+}
+
+model OauthConsent {
+  id               String           @id
+  clientId         String
+  oauthapplication OauthApplication @relation(fields: [clientId], references: [clientId], onDelete: Cascade)
+  userId           String
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scopes           String
+  createdAt        DateTime
+  updatedAt        DateTime
+  consentGiven     Boolean
+
+  @@index([clientId])
+  @@index([userId])
+  @@map("oauthConsent")
+}
+
+// ============================================================================
+// BISNO — Plataforma de afiliados
+// ============================================================================
+// ─── Categoria de Produtos ───────────────────────────────────────────────────
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+
+  @@map("categories")
+}
+
+// ─── Produto Principal ───────────────────────────────────────────────────────
+model Product {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  description  String   @db.Text
+  price        String // Mantido como String para suportar formatações como "150.000 Kz"
+  commission   Int      @default(10) // Percentagem de comissão do afiliado (ex: 10 = 10%)
+  rating       Float    @default(0.0)
+  reviewsCount Int      @default(0)
+  stock        Int      @default(0)
+  categoryId   String
+  category     Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  images    String[] // Array de URLs de imagens
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  specs          ProductSpec[]
+  featured       FeaturedProduct?
+  stockAfiliates StockAfiliate[]
+  store          Store           @relation(fields: [storeId], references: [id])
+  storeId        String
+
+  @@index([categoryId])
+  @@index([createdAt])
+  @@map("products")
+}
+
+// ─── Especificações Técnicas (Chave-Valor) ──────────────────────────────────
+model ProductSpec {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  label     String
+  value     String
+
+  @@map("product_specs")
+}
+
+// ─── Banners e Produtos em Destaque ──────────────────────────────────────────
+model FeaturedProduct {
+  id          String @id @default(cuid())
+  title       String
+  subtitle    String
+  description String @db.Text
+  textColor   String @default("light") // "dark" | "light"
+  aspectRatio Float?
+
+  // Imagens do Banner Responsivo
+  bannerDesktop String
+  bannerMobile  String
+
+  productId String  @unique
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("featured_products")
+}
+
+// ----------------------------------------------------------------------------
+// ENUMS
+// ----------------------------------------------------------------------------
+
+enum AffiliateStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+}
+
+model StockAfiliate {
+  id        String   @id @default(cuid())
+  productId String
+  coupon    String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
+
+  @@unique([userId, productId])
+  @@index([productId])
+  @@map("affiliate_products")
+}
+
+// ----------------------------------------------------------------------------
+// LOJAS E MEMBROS
+// ----------------------------------------------------------------------------
+
+model Store {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  logoUrl     String?
+  description String?
+  whatsapp    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+
+  @@map("stores")
+}

@@ -127,8 +127,11 @@
       "emailPlaceholder": "nome@exemplo.com",
       "password": "Palavra-passe",
       "forgotPassword": "Esqueceste-te da palavra-passe?",
-      "submit": "Entrar na Bisno",
+      "continue": "Continuar com Bisno",
+      "signingIn": "A iniciar sessão...",
       "noAccount": "Ainda não tens conta?",
+      "loginError": "Não foi possível iniciar sessão. Verifique os seus dados e tente novamente.",
+      "genericError": "Ocorreu um erro. Verifique a sua ligação e tente novamente.",
       "createAccount": "Criar conta de afiliado"
     },
     "register": {

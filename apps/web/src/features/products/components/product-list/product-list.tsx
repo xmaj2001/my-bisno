@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { GetProductsParams } from "../../types";
 import { SkeletonGrid } from "../product-grid";
-import { ProductListContent } from "./product-list-content";
-
+import { getProducts } from "../../queries";
+import { ProductListInfinite } from "./product-list-infinite";
 export function ProductList({ params = {} }: { params?: GetProductsParams }) {
   return (
     // key: quando os filtros/params mudam, o Suspense volta a mostrar o skeleton
@@ -10,4 +10,13 @@ export function ProductList({ params = {} }: { params?: GetProductsParams }) {
       <ProductListContent params={params} />
     </Suspense>
   );
+}
+
+async function ProductListContent({
+  params = {},
+}: {
+  params?: GetProductsParams;
+}) {
+  const { data } = await getProducts(params);
+  return <ProductListInfinite params={params} initialPage={data} />;
 }

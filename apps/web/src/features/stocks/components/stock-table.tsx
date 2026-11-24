@@ -52,7 +52,7 @@ function createColumns(lang: string) {
       header: "Produto",
       cell: ({ row }) => (
         <Link
-          href={`/${lang}/system/stocks/${row.original.id}`}
+          href={`/${lang}/system/stocks/${row.original.slug}`}
           className="flex items-center gap-3 hover:text-primary"
         >
           <div className="relative size-10 overflow-hidden rounded-xs border bg-secondary">
@@ -153,14 +153,15 @@ interface StockTableProps {
 export function StockTable({ data, globalFilter }: StockTableProps) {
   const lang = usePathname().split("/")[1];
   const columns = createColumns(lang);
+  const items = Array.isArray(data) ? data : [];
   const query = globalFilter.trim().toLocaleLowerCase();
   const filteredData = query
-    ? data.filter(
+    ? items.filter(
         (item) =>
-          item.name.toLocaleLowerCase().includes(query) ||
-          item.category.toLocaleLowerCase().includes(query),
+          item.name?.toLocaleLowerCase().includes(query) ||
+          item.category?.toLocaleLowerCase().includes(query),
       )
-    : data;
+    : items;
   const table = useTable({
     features: stockFeatures,
     data: filteredData,

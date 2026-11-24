@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const SessionFeaturedProducts = () => {
   return (
-    <section className="mx-auto max-w-7xl py-10">
+    <section className="mx-auto max-w-7xl pb-10">
       <Suspense fallback={<SkeletonFeaturedCarousel />}>
         <FeaturedProductsContent />
       </Suspense>
@@ -17,6 +17,7 @@ const FeaturedProductsContent = async () => {
   const response = await getFeaturedProducts();
   const data = response.data;
 
+  console.log("SSSS: ", data);
   if (!data || data.length === 0) return null;
 
   return <FeaturedCarousel items={data} />;

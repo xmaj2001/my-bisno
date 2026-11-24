@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/footer";
-import { ProductList } from "@/features/products/components/product-list/product-list";
-import { ProductSearchFilters } from "@/features/products/components/product-search-filters";
 import { SessionFeaturedProducts } from "@/features/products/components/session-featured-products";
 import { SessionNewProducts } from "@/features/products/components/session-new-products";
 import { SessionRecommendedProducts } from "@/features/products/components/session-recommended-products";

@@ -13,8 +13,11 @@ export function StockView() {
 
 async function StockViewContent() {
   const response = await getStockList();
-  const data = response.data;
-
+  const data = response.success
+    ? Array.isArray(response.data)
+      ? response.data
+      : (response.data?.items ?? [])
+    : [];
   return <StockTableGrid data={data} />;
 }
 

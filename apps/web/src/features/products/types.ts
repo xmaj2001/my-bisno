@@ -12,7 +12,12 @@ export type Product = {
   description: string;
   price: string;
   commission: number;
-  /** Valor de comissão formatado (ex.: "250 Kz") */
+  specs: {
+    id: string;
+    label: string;
+    value: string;
+    productId: string;
+  }[];
   earning: string;
   image: string;
 };
@@ -21,12 +26,10 @@ export type FeaturedProduct = {
   title: string;
   subtitle: string;
   description: string;
-  backdrop: string;
+  bannerDesktop: string;
+  bannerMobile: string;
+  textColor: string;
   aspectRatio?: number;
-  specifications: {
-    key: string;
-    value: string;
-  }[];
   product: Product;
 };
 
@@ -50,6 +53,7 @@ export type APIProductDetails = {
   description: string;
   price: string;
   commission: number;
+  image?: string;
   images: string[];
   category: string;
   specs: spec[];
@@ -60,7 +64,6 @@ export type APIProductDetails = {
 
 export interface GetProductsParams {
   cursor?: string;
-  cursorPublishedAt?: string;
   limit?: string;
   categoryId?: string;
   storeId?: string;

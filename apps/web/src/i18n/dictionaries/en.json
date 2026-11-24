@@ -127,7 +127,10 @@
       "emailPlaceholder": "name@example.com",
       "password": "Password",
       "forgotPassword": "Forgot your password?",
-      "submit": "Sign in to Bisno",
+      "continue": "Continue with Bisno",
+      "signingIn": "Signing in...",
+      "loginError": "Could not sign in. Check your details and try again.",
+      "genericError": "Something went wrong. Check your connection and try again.",
       "noAccount": "Don't have an account yet?",
       "createAccount": "Create an affiliate account"
     },

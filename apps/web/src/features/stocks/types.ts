@@ -10,6 +10,10 @@ export type StockItem = {
   commission: string;
   status: "disponivel" | "baixo" | "esgotado";
   image: string;
+  slug?: string;
+  coupon?: string;
+  isActive?: boolean;
+  earning?: string;
 };
 
 interface spec {
@@ -28,7 +32,11 @@ export type StockItemDetails = {
   status: "disponivel" | "baixo" | "esgotado";
   images: string[];
   category: string;
-  
+  store: {
+    name: string;
+    logoUrl: string | null;
+    whatsapp: string;
+  };
   coupon: string;
   specs: spec[];
 };
@@ -45,7 +53,9 @@ export interface GetStockParams {
 // ─── Aliases de resposta (response shapes prontas a usar nos componentes) ─────
 
 /** GET /v1/stock */
-export type StockListResponse = ApiEnvelope<StockItem[]>;
+export type StockListResponse = ApiEnvelope<
+  ApiCursorEnvelope<StockItem> | StockItem[]
+>;
 
 /** GET /v1/stock/paginated?... (se precisares de paginação por cursor no stock) */
 export type StockPageResponse = ApiEnvelope<ApiCursorEnvelope<StockItem>>;

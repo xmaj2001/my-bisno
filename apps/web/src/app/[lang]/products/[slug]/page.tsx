@@ -51,10 +51,11 @@ export async function generateMetadata({
       image:
         product.images && product.images.length > 0
           ? product.images
-          : [].filter(Boolean),
+          : undefined,
       type: "article",
     });
-  } catch {
+  } catch (error) {
+    console.error(`Erro ao gerar metadados para /products/${slug}:`, error);
     return constructMetadata({
       title: "Detalhes do Produto",
       lang: lang as Locale,

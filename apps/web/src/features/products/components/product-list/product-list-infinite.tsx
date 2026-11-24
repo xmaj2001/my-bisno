@@ -41,9 +41,9 @@ export function ProductListInfinite({
 
   return (
     <div className="flex flex-col gap-4 w-full pb-20">
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
-        {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
+        {products.map((product,) => (
+          <ProductItem key={product.slug} product={product} />
         ))}
         {isFetchingNextPage &&
           FETCH_SKELETON_KEYS.map((id) => <ProducttItemSkeleton key={id} />)}

@@ -39,9 +39,9 @@ export function getMockStock(count = 16): StockItem[] {
   });
 }
 
-export function getMockStockId(id: string): StockDetailsResponse {
+export function getMockStockSlug(slug: string): StockDetailsResponse {
   const allProducts = getMockStock(24);
-  const found = allProducts.find((p) => p.id === id) ?? allProducts[0];
+  const found = allProducts.find((p) => p.slug === slug) ?? allProducts[0];
 
   // Gerar algumas especificações técnicas realistas para o mock
   const mockSpecs: { label: string; value: string }[] = [
@@ -67,6 +67,11 @@ export function getMockStockId(id: string): StockDetailsResponse {
     specs: mockSpecs,
     earning: "50",
     coupon: `BISNO-${found.id.toUpperCase()}`,
+    store: {
+      name: "Bisno",
+      logoUrl: null,
+      whatsapp: "+244944083160",
+    },
   };
 
   return {

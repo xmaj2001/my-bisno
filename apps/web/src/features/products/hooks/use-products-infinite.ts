@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { ApiCursorEnvelope } from "@/lib/api/types";
 import { productKeys } from "../keys";
-import { getProducts } from "../queries";
+import { getProductsAction } from "../interactions";
 import type { GetProductsParams, Product } from "../types";
 
 type PageParam = { cursor: string; cursorPublishedAt?: string } | undefined;
@@ -15,7 +15,7 @@ export function useProductsInfinite(
   return useInfiniteQuery({
     queryKey: productKeys.list(params),
     queryFn: async ({ pageParam }) => {
-      const res = await getProducts({ ...params, ...pageParam });
+      const res = await getProductsAction({ ...params, ...pageParam });
       return res.data;
     },
     initialPageParam: undefined as PageParam,

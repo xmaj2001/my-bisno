@@ -34,6 +34,14 @@ export function generateMockProducts(count = 24): Product[] {
       commission,
       earning: `${earningNum.toFixed(2)} Kz`,
       image: `https://picsum.photos/seed/${index + 1}/600/400`,
+      specs: [
+        {
+          id: `spec-${index + 1}-1`,
+          label: "Garantia",
+          value: "1 Ano",
+          productId: `prod-${index + 1}`,
+        },
+      ],
     };
   });
 }
@@ -94,13 +102,10 @@ export function getMockFeaturedProducts(): FeaturedProductsResponse {
     title: `Destaque Especial #${idx + 1}`,
     subtitle: "Oportunidade Limitada",
     description: p.description,
-    backdrop: `https://picsum.photos/seed/backdrop-${idx + 1}/1200/600`,
+    bannerDesktop: `https://picsum.photos/seed/backdrop-${idx + 1}/1920/600`,
+    bannerMobile: `https://picsum.photos/seed/backdrop-${idx + 1}/800/800`,
+    textColor: "light",
     aspectRatio: 16 / 9,
-    specifications: [
-      { key: "Comissão", value: p.earning },
-      { key: "Preço Base", value: p.price },
-      { key: "Garantia", value: "Oficial da Marca" },
-    ],
     product: p,
   }));
 

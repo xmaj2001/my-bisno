@@ -1,4 +1,5 @@
 // import { getSessionCookies } from "@/features/auth/queries";
+import { getSessionCookies } from "@/features/auth/queries";
 import type { ApiEnvelope, ApiResponseError, ErrorResponse } from "./types";
 
 const API =
@@ -11,11 +12,12 @@ export async function apiFetch<T>(
   version: string = "v1",
   options?: RequestInit,
 ): Promise<ApiEnvelope<T>> {
-  // const cookie = await getSessionCookies();
-  const defaultOptions = {
+  const cookie = await getSessionCookies();
+  console.log("cookie:", cookie)
+  const defaultOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
-      // Cookie: cookie,
+      Cookie: cookie,
     },
   };
   const url = `${API}/${version}${endpoint}`;

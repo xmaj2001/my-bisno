@@ -9,12 +9,18 @@ import { Input } from "@/components/ui/input";
 import { LayoutGrid, Table as TableIcon, Search } from "lucide-react";
 
 interface StockTableGridProps {
-  data: StockItem[];
+  data: StockItem[] | { items?: StockItem[] };
 }
 
 export function StockTableGrid({ data }: StockTableGridProps) {
-  const [viewMode, setViewMode] = useState<"table" | "grid">("table");
+  const [viewMode, setViewMode] = useState<"table" | "grid">("grid");
   const [globalFilter, setGlobalFilter] = useState("");
+
+  const items = Array.isArray(data)
+    ? data
+    : Array.isArray((data as { items?: StockItem[] })?.items)
+      ? (data as { items: StockItem[] }).items
+      : [];
 
   return (
     <div className="space-y-4">
@@ -54,9 +60,9 @@ export function StockTableGrid({ data }: StockTableGridProps) {
 
       {/* Renderização Condicional Limpa */}
       {viewMode === "table" ? (
-        <StockTable data={data} globalFilter={globalFilter} />
+        <StockTable data={items} globalFilter={globalFilter} />
       ) : (
-        <StockGrid data={data} globalFilter={globalFilter} />
+        <StockGrid data={items} globalFilter={globalFilter} />
       )}
     </div>
   );

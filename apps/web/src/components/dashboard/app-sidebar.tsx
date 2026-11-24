@@ -1,6 +1,6 @@
 "use client";
 
-import { ClipboardList, MapPinned, Package, ShoppingBag } from "lucide-react";
+import { ClipboardList, LayoutDashboard, MapPinned, Package, PackageOpen, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type * as React from "react";
@@ -30,14 +30,30 @@ export function AppSidebar({ lang, translations, ...props }: AppSidebarProps) {
 
   const mainItems = [
     {
+      title: "Catalogo",
+      url: `/${lang}/system/`,
+      icon: <LayoutDashboard />,
+    },
+    {
+      title: "Products",
+      url: `/${lang}/system/products`,
+      icon: <Package />,
+      items: [
+        {
+          title: "New",
+          url: `/${lang}/system/products/new/`,
+        },
+
+        {
+          title: "Recommended",
+          url: `/${lang}/system/products/recommended/`,
+        },
+      ],
+    },
+    {
       title: translations.stock,
       url: stockUrl,
       icon: <Package />,
-    },
-    {
-      title: translations.catalog,
-      url: `/${lang}/products`,
-      icon: <ShoppingBag />,
     },
   ].map((item) => ({
     ...item,
@@ -72,25 +88,6 @@ export function AppSidebar({ lang, translations, ...props }: AppSidebarProps) {
           items={mainItems}
           label={translations.mainGroup}
           toggleLabel={translations.expandMenu}
-        />
-        <NavOperations
-          items={[
-            {
-              title: translations.orders,
-              icon: <ClipboardList />,
-              children: [translations.orderTracking, translations.deliveries],
-            },
-            {
-              title: translations.regions,
-              icon: <MapPinned />,
-              children: [
-                translations.provinceCoverage,
-                translations.regionCoverage,
-              ],
-            },
-          ]}
-          label={translations.operationsGroup}
-          unavailableLabel={translations.comingSoon}
         />
       </SidebarContent>
       <SidebarFooter>
